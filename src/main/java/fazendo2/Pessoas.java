@@ -33,11 +33,13 @@ public class Pessoas {
 	private String senha;
 	private String nome;
 	private String email;
-	
+	@ManyToOne
+	private CATEGORIAS categoria = new CATEGORIAS();
 	
 	@Transient
 	private String confereSenha;
-	
+	@Transient
+	private String cadastraCategoria;
 	
 	@Transient
 	private String nomeMudanca;
@@ -85,8 +87,19 @@ public class Pessoas {
 	public void setNomeMudanca(String nomeMudanca) {
 		this.nomeMudanca = nomeMudanca;
 	}
-
+	public String getCadastraCategoria() {
+		return cadastraCategoria;
+	}
+	public void setCadastraCategoria(String cadastraCategoria) {
+		this.cadastraCategoria = cadastraCategoria;
+	}
 	
+	public CATEGORIAS getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(CATEGORIAS categoria) {
+		this.categoria = categoria;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -118,19 +131,19 @@ public class Pessoas {
 	try {
 	if(getSenha().equals(getConfereSenha())) {
 		Pessoas P = new Pessoas();
-		
+		CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 		
 		
 		P.setSenha(getSenha());
 		P.setNome(getNome());
 		P.setEmail(getEmail());
-		
+		P.setCategoria(Cat);
 		P.setCpf(getCpf());
 		System.out.println("VOCÊ FOI CADASTRADO");
 		//	
 		//
 		//
-	
+		PessoasDAO.cadastrarCategoria(Cat);
 		PessoasDAO.cadastrarPessoas(P);
 		
 		
@@ -170,6 +183,7 @@ public class Pessoas {
 			
 			
 			
+			CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 			
 			if(getNome().isEmpty()||getNomeMudanca().isEmpty()) {
 				nomes.setNome(nomes.getNome());
@@ -188,7 +202,8 @@ public class Pessoas {
 			}
 			
 			
-			
+			nomes.setCategoria(Cat);
+			PessoasDAO.cadastrarCategoria(Cat);
 			PessoasDAO.consultar(nomes);
 			
 		}
@@ -213,11 +228,13 @@ public String  cadastraFora(Pessoas p) {
 			
 		if(getSenha().equals(getConfereSenha())) {
 				Pessoas P = new Pessoas();
+				CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 				
 				
 				P.setSenha(getSenha());
 				P.setNome(getNome());
 				P.setEmail(getEmail());
+				P.setCategoria(Cat);
 				P.setCpf(getCpf());
 				System.out.println("VOCÊ FOI CADASTRADO");
 				//	
@@ -260,4 +277,6 @@ public String  cadastraFora(Pessoas p) {
 	}
 
 }
+
+
 
