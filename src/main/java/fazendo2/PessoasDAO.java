@@ -19,13 +19,15 @@ public static String cadastrarPessoas(Pessoas p)  {
 	novoGerenciador.persist(p);
 	novoGerenciador.getTransaction().commit();
 	}catch(Exception erro) {
+		if(novoGerenciador.isOpen)){
 		novoGerenciador.getTransaction().rollback();
 		erro.printStackTrace();
+		}
 	}finally {
-		System.out.println("hellothere");
+		if(novoGerenciador.isOpen)){
 
 		novoGerenciador.close();
-
+		}
 	}
 	return "index2";
 	}
