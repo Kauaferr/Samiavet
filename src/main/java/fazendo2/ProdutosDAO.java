@@ -14,19 +14,23 @@ public class ProdutosDAO {
 	
 	public static String cadastrarProdutos(Produtos p)  {
 		try {
-		novoGerenciador = JPAUtil.getEntityManager();
-		novoGerenciador.getTransaction().begin();
-		novoGerenciador.persist(p);
-		novoGerenciador.getTransaction().commit();
-		}catch(Exception erro) {
-			novoGerenciador.getTransaction().rollback();
-			erro.printStackTrace();
-		}finally{
+	novoGerenciador = JPAUtil.getEntityManager();
+	novoGerenciador.getTransaction().begin();
+	novoGerenciador.persist(p);
+	novoGerenciador.getTransaction().commit();
+	}catch(Exception erro) {
+		if(novoGerenciador.isOpen)){
+		novoGerenciador.getTransaction().rollback();
+		erro.printStackTrace();
+		}
+	}finally {
+		if(novoGerenciador.isOpen)){
+
 		novoGerenciador.close();
 		}
-		
-		return "index2";
-		}
+	}
+	return "index2";
+	}
 
 	public  String consultar(Produtos p)  {
 		try {
