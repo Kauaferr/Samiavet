@@ -90,13 +90,13 @@ width:100px;
 <h2>CADASTRAR</h2>
 </fieldset>
 <br></br><h:outputLabel value="DIGITE O SEU NOME: "></h:outputLabel>
-<br></br><p:inputText value="#{pessoas.nome}" id="nome" class="inputText" />
+<br></br><p:inputText value="#{pessoas.nome}" id="nome"  />
 
 <br></br><h:outputLabel value="DIGITE O SEU E-MAIL: "></h:outputLabel>
-<br></br><p:inputText value="#{pessoas.email}" id="email" class="inputText" />
+<br></br><p:inputText value="#{pessoas.email}" id="email"/>
 
 <br></br><h:outputLabel value="DIGITE O SEU CPF: "></h:outputLabel>
-<br></br><p:inputText value="#{pessoas.valorCpf}"  class="inputCpf" />
+<br></br><p:inputText value="#{pessoas.valorCpf}"  styleClass="inputCpf" />
 
 
 
@@ -106,11 +106,11 @@ width:100px;
 
 
 <br></br><h:outputLabel value="DIGITE A SUA SENHA NOVAMENTE: "></h:outputLabel>
-<br></br><br></br><p:password value="#{pessoas.confereSenha}" id="senha2" class="inputSenha" />
+<br></br><br></br><p:password value="#{pessoas.confereSenha}" id="senha2" styleClass="inputSenha" />
 
 
 
-<br></br><h:outputLabel value= "ESCOLHA A SUA CATEGORIA: " class="lcpf"></h:outputLabel>
+<br></br><h:outputLabel value= "ESCOLHA A SUA CATEGORIA: " ></h:outputLabel>
 	<br></br><p:selectOneMenu id="txt2" value="#{pessoas.cadastraCategoria}" required="true" label="Text 2" style="width: 12rem">
                     <f:selectItem itemLabel="VIÚVO" itemValue="V" noSelectionOption="true"/>
                     <f:selectItem itemLabel="CASADO" itemValue="C"/>
@@ -137,12 +137,12 @@ width:100px;
 <h2>LOGIN</h2>
 </fieldset>
 <br></br><h:outputLabel value="DIGITE O SEU NOME: "></h:outputLabel>
-<br></br><p:inputText value="#{pessoas.nome}" class="inputText" />
+<br></br><p:inputText value="#{pessoas.nome}" styleClass="inputText" />
 
 
 
 <br></br><h:outputLabel value="DIGITE O SEU CPF: "></h:outputLabel>
-<br></br><br></br><p:inputText value="#{pessoas.valorCpf}"  class="inputCpf" />
+<br></br><br></br><p:inputText value="#{pessoas.valorCpf}"  styleClass="inputCpf" />
 
 
 
