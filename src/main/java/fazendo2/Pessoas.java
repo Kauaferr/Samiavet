@@ -37,8 +37,7 @@ public class Pessoas {
 	
 	@Transient
 	private String confereSenha;
-	@Transient
-	private String cadastraCategoria;
+	
 	
 	@Transient
 	private String nomeMudanca;
@@ -87,12 +86,7 @@ public class Pessoas {
 		this.nomeMudanca = nomeMudanca;
 	}
 
-	public CATEGORIAS getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(CATEGORIAS categoria) {
-		this.categoria = categoria;
-	}
+	
 	public String getNome() {
 		return nome;
 	}
