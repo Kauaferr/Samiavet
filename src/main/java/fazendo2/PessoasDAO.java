@@ -29,23 +29,7 @@ public static String cadastrarPessoas(Pessoas p)  {
 	}
 	return "index2";
 	}
-public static String cadastrarCategoria(CATEGORIAS p)  {
-	try {
-	novoGerenciador = JPAUtil.getEntityManager();
-	novoGerenciador.getTransaction().begin();
-	novoGerenciador.persist(p);
-	novoGerenciador.getTransaction().commit();
-	}catch(Exception erro) {
-		novoGerenciador.getTransaction().rollback();
-		erro.printStackTrace();
-	}finally {
-		System.out.println("hellothere");
 
-		novoGerenciador.close();
-
-	}
-	return "index2";
-	}
 public static String consultar(Pessoas p)  {
 	try {
 		novoGerenciador = JPAUtil.getEntityManager();
