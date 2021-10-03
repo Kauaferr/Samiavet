@@ -21,8 +21,10 @@ public class ProdutosDAO {
 		}catch(Exception erro) {
 			novoGerenciador.getTransaction().rollback();
 			erro.printStackTrace();
-		}
+		}finally{
 		novoGerenciador.close();
+		}
+		
 		return "index2";
 		}
 
@@ -99,7 +101,7 @@ public class ProdutosDAO {
 		catch(Exception erro) {
 			novoGerenciador.getTransaction().rollback();
 		}finally {
-			
+			novoGerenciador.close();
 		}
 		return null;
 	
