@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+
+
+>
+
+
+
+
+<style>
+
+
+.inputText{
+
+width:300px;
+}
+.inputSenha{
+width:150px;
+
+}
+.imagem{
+width:500px;
+
+
+
+}
+.div2{
+
+background:#000033;
+
+
+}
+
+.div3{
+float:left;
+}
+
+.fieldset{
+float:left;
+
+}
+.fieldset2{
+width:500px;
+float:left;
+height:500px;
+}
+.fieldset3{
+width:500px
+
+}
+.fieldset4{
+
+float:left;
+width:500px;
+height:500px;
+}
+
+.inputCpf{
+width:100px;
+
+}
+</style>
+
+
+
+<div class="div1">
+ 
+ 
+
+
+
+<h:form id="formPessoa">
+
+<div class="div2">
+
+
+
+</div>
+
+<fieldset class="fieldset2">
+<fieldset class="fieldset3">
+<p:growl showDetail="true"></p:growl>
+<h2>CADASTRAR</h2>
+</fieldset>
+<br></br><h:outputLabel value="DIGITE O SEU NOME: "></h:outputLabel>
+<br></br><p:inputText value="#{pessoas.nome}" id="nome" class="inputText" />
+
+<br></br><h:outputLabel value="DIGITE O SEU E-MAIL: "></h:outputLabel>
+<br></br><p:inputText value="#{pessoas.email}" id="email" class="inputText" />
+
+<br></br><h:outputLabel value="DIGITE O SEU CPF: "></h:outputLabel>
+<br></br><p:inputText value="#{pessoas.valorCpf}"  class="inputCpf" />
+
+
+
+<br></br><h:outputLabel value="DIGITE A SUA SENHA: "></h:outputLabel>
+<br></br><br></br><p:password value="#{pessoas.senhaValor}"  required="true" requiredMessage="A SENHA É OBRIGATÓRIA" />
+
+
+
+<br></br><h:outputLabel value="DIGITE A SUA SENHA NOVAMENTE: "></h:outputLabel>
+<br></br><br></br><p:password value="#{pessoas.confereSenha}" id="senha2" class="inputSenha" />
+
+
+
+<br></br><h:outputLabel value= "ESCOLHA A SUA CATEGORIA: " class="lcpf"></h:outputLabel>
+	<br></br><p:selectOneMenu id="txt2" value="#{pessoas.cadastraCategoria}" required="true" label="Text 2" style="width: 12rem">
+                    <f:selectItem itemLabel="VIÚVO" itemValue="V" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="CASADO" itemValue="C"/>
+                    <f:selectItem itemLabel="SOLTEIRO" itemValue="S"/>
+                    <f:selectItem itemLabel="DIVORCIADO" itemValue="D"/>
+                </p:selectOneMenu>
+                
+
+<br></br><p:commandButton value="CADASTRAR" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" action="#{pessoas.cadastrar}"  id="botao" update="formPessoa"/>
+</fieldset>
+</h:form>
+
+
+
+
+
+
+
+<h:form>
+<div class="div3">
+<fieldset class="fieldset4">
+
+<fieldset class="fieldset3">
+<h2>LOGIN</h2>
+</fieldset>
+<br></br><h:outputLabel value="DIGITE O SEU NOME: "></h:outputLabel>
+<br></br><p:inputText value="#{pessoas.nome}" class="inputText" />
+
+
+
+<br></br><h:outputLabel value="DIGITE O SEU CPF: "></h:outputLabel>
+<br></br><br></br><p:inputText value="#{pessoas.valorCpf}"  class="inputCpf" />
+
+
+
+<br></br><h:outputLabel value="DIGITE A SUA SENHA: "></h:outputLabel>
+<br></br><p:password value="#{pessoas.senhaValor}"  required="true" requiredMessage="A SENHA É OBRIGATÓRIA" />
+
+
+
+<br></br><p:commandButton value="ENTRAR" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" action="#{pessoas.cadastrar}"  />
+
+</fieldset>
+</div>
+
+
+
+
+
+</h:form>
+
+
+</div>
+
+
+
+<i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+
+
+
+<p:calendar></p:calendar>
+
+</ui:composition>

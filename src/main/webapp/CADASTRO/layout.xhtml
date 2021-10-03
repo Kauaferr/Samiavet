@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd%22%3E">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+ 	
+    >
+
+	<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Boavista</title>
+   <link rel="icon" href="icone.jpg" />
+    <h:outputStylesheet library="css" name="estilos.css"/>
+    
+    <style>
+
+    
+    .ui-layout-north {
+    z-index: 20 !important;
+    overflow: visible !important;
+    
+}
+
+.ui-layout-north .ui-layout-unit-content {
+
+    overflow: visible !important;
+   
+}
+.ui-widget, .ui-widget .ui-widget {
+font-size: 12px !important;
+}
+    
+    
+    </style>
+</h:head>
+<h:body>
+
+<p:growl></p:growl>
+<p:layout fullPage="true">
+
+
+        <p:layoutUnit position="north">
+            <ui:insert name ="menu"/>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <ui:insert name="conteudo"/>
+        </p:layoutUnit>
+        
+        
+        
+         <p:layoutUnit position="west">
+            <ui:insert name="conteudo-oeste"/>
+        </p:layoutUnit>
+        
+        
+        
+    </p:layout>
+   
+    
+</h:body>
+
+
+</h:html>

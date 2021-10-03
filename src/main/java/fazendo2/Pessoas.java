@@ -1,15 +1,12 @@
-
+package fazendo2;
 
 import java.util.List;
-
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -37,6 +34,7 @@ public class Pessoas {
 	private String nome;
 	private String email;
 	@ManyToOne
+	private CATEGORIAS categoria = new CATEGORIAS();
 	
 	@Transient
 	private String confereSenha;
@@ -96,7 +94,12 @@ public class Pessoas {
 		this.cadastraCategoria = cadastraCategoria;
 	}
 	
-
+	public CATEGORIAS getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(CATEGORIAS categoria) {
+		this.categoria = categoria;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -128,17 +131,19 @@ public class Pessoas {
 	try {
 	if(getSenha().equals(getConfereSenha())) {
 		Pessoas P = new Pessoas();
+		CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 		
 		
 		P.setSenha(getSenha());
 		P.setNome(getNome());
 		P.setEmail(getEmail());
+		P.setCategoria(Cat);
 		P.setCpf(getCpf());
 		System.out.println("VOCÊ FOI CADASTRADO");
 		//	
 		//
 		//
-		
+		PessoasDAO.cadastrarCategoria(Cat);
 		PessoasDAO.cadastrarPessoas(P);
 		
 		
@@ -178,6 +183,7 @@ public class Pessoas {
 			
 			
 			
+			CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 			
 			if(getNome().isEmpty()||getNomeMudanca().isEmpty()) {
 				nomes.setNome(nomes.getNome());
@@ -196,7 +202,8 @@ public class Pessoas {
 			}
 			
 			
-			
+			nomes.setCategoria(Cat);
+			PessoasDAO.cadastrarCategoria(Cat);
 			PessoasDAO.consultar(nomes);
 			
 		}
@@ -221,12 +228,13 @@ public String  cadastraFora(Pessoas p) {
 			
 		if(getSenha().equals(getConfereSenha())) {
 				Pessoas P = new Pessoas();
-				
+				CATEGORIAS Cat = new CATEGORIAS(getCadastraCategoria());
 				
 				
 				P.setSenha(getSenha());
 				P.setNome(getNome());
 				P.setEmail(getEmail());
+				P.setCategoria(Cat);
 				P.setCpf(getCpf());
 				System.out.println("VOCÊ FOI CADASTRADO");
 				//	
