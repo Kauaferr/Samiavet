@@ -21,12 +21,8 @@ public class ProdutosDAO {
 		}catch(Exception erro) {
 			novoGerenciador.getTransaction().rollback();
 			erro.printStackTrace();
-		}finally {
-			System.out.println("hellothere");
-
-			novoGerenciador.close();
-
 		}
+		novoGerenciador.close();
 		return "index2";
 		}
 
