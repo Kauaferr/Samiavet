@@ -138,8 +138,7 @@
     <webXml>src\main\webapp\WEB-INF\web.xml</webXml>        
   </configuration>
 </plugin>
-            
-</plugin>
+
                 <plugin>
                     <groupId>com.heroku.sdk</groupId>
                     <artifactId>heroku-maven-plugin</artifactId>
