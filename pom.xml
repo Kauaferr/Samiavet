@@ -24,6 +24,7 @@
   <properties>
   
   <webapp-runner.version>9.0.13.0</webapp-runner.version>
+  <java.version>11</java.version>
   </properties>
   
       <dependencies>
