@@ -24,7 +24,6 @@
   <properties>
   
   <webapp-runner.version>9.0.13.0</webapp-runner.version>
-  <java.version>11</java.version>
   </properties>
   
       <dependencies>
@@ -94,17 +93,20 @@
     
  
     <build>
-        <plugins>
-            <plugin>
+         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>8</source>
+                    <target>8</target>
+                    <testSource>8</testSource>
+                    <testTarget>8</testTarget>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
+        </plugins>
             
             
                <plugin>
