@@ -24,7 +24,8 @@
   <properties>
   
   <webapp-runner.version>9.0.13.0</webapp-runner.version>
- 
+         <java.home>/usr/java/jdk1.8.0_45/bin/javac</java.home>
+
 </properties>
   
   
@@ -96,17 +97,7 @@
  
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            
+        
             
                <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -131,6 +122,19 @@
     </plugin>
             
             
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.5.1</version>
+                <configuration>
+                      <verbose>true</verbose>
+                      <fork>true</fork>
+                      <executable>${java.home}</executable>
+                   <compilerVersion>1.8</compilerVersion>
+                   <source>1.8</source>
+                   <target>1.8</target>
+                 </configuration>
+             </plugin>
             
             
           <plugin>            
