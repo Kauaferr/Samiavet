@@ -22,9 +22,7 @@
   
   <properties>
   	<webapp-runner.version>9.0.13.0</webapp-runner.version>
-       <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.release>11</maven.compiler.release>
+ 
   </properties>
   
       <dependencies>
@@ -105,9 +103,11 @@
                <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-version}</version>
                 <configuration>
-                    <release>11</release>
+			<source>${java.version}</source>
+			<target>${java.version}</target>
+			<encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             
