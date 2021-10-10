@@ -114,7 +114,7 @@
                     <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
                     <source>1.8</source>
                     <target>1.8</target>
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    	    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             
