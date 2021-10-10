@@ -29,6 +29,17 @@
  
   </properties>
   
+<configuration>
+  <appName>sushi</appName>
+</configuration>
+	
+
+  <processTypes>
+     <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+  </processTypes>
+</configuration>
+	
+	
       <dependencies>
       
       <!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
