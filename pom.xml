@@ -28,14 +28,7 @@
  
   </properties>
   
-<configuration>
-  <appName>apppessoas</appName>
 
-  <processTypes>
-     <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
-  </processTypes>
-</configuration>
-	
 	
       <dependencies>
       
