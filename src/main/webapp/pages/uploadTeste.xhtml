@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    >
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>SAMIAVET</title>
+	<h:outputStylesheet library="css" name="style.css"/>
+	<h:outputScript library="js" name="scripts.js"/>
+	<link rel="icon" href="../resources/imagens/SamiaVet.png" />
+	
+</h:head>
+<h:body style="background-color:#f3f3f3; font-family: 'Open Sans', sans-serif !important;" onload="chamar()">
+	<style>
+		
+		.fieldset-cliente{
+			float:left;
+		}
+		.fieldset-animal{
+			float:left;
+		}
+		.label-cpf{
+			padding-left: 80px;
+		}
+		.panel-proprietario{
+			width:100%;
+			font-size: 30px;
+		}
+		.panel-animal{
+			float:left;
+		}
+		.inputs{
+				width: 300px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 30px;
+		}
+		.div-animal{
+			float: left;
+		}
+		.teste{
+		
+			float: left;	
+		}
+		
+		.inputFc{
+		
+				width: 100px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 10px;
+		
+		}
+		
+		.inputFr{
+		
+				width: 100px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 10px;
+		
+		}
+		
+		.inputP{
+		
+				width: 100px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 10px;
+		
+		}
+		
+		.inputT{
+		
+				width: 100px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 10px;
+		
+		
+		}
+		.inputData{
+				width: 100px;
+				height: 20px;
+				maxlength: 50;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				margin-left: 10px;
+		
+		}
+		.inputSexo{
+		
+				width: 100px;
+				height: 30px;
+
+		
+		}
+		
+		.outPutTexts{
+			padding-left: 10px;
+			font-size: 15px;
+			
+		}
+		
+		.outPutTextFc{
+		
+			font-size: 15px;
+		}
+		
+		.outPutTextFr{
+		
+			font-size: 15px;
+			padding-left: 10px;
+		}
+		
+		.outPutTextP{
+			font-size: 15px;
+			padding-left: 10px;
+		
+		}
+		
+		.outPutTextT{
+			font-size: 15px;
+			padding-left: 10px;
+		}
+		.inputTextArea{
+		
+			width:80%;
+		}
+		
+		.inputTextAreaEndereco{
+			height:50px;
+			width:40%;
+		}
+		.btn-cadastrar{
+		
+			width:100px;
+			height: 40px;
+			font-size: 15px;
+			background-color:#6ab125;
+		}
+		.panel-proprietario{
+		
+			font-size: 15px;
+		}
+		.carregando{
+			width:50px;
+		}
+		.data{
+		
+    		display: block !important;
+    	    font-size: 11px !important;
+    	    float:left;
+		}
+		.tituloDescricao{
+			float:right;
+		}
+	</style>
+			<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
+	
+	<div style="float:right; margin-top:10px;">
+	</div>
+	
+<h:form>  
+ 
+    <p:menubar>
+        <p:submenu label="FICHAS" icon="pi pi-file">
+            <p:menuitem value="Cadastrar animal"  url="cadastro.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar animal" url="consultaFichas.xhtml"/>
+           	<p:separator />
+            <p:menuitem value="Agendar evento" url="agendamentos.xhtml" />
+        </p:submenu>
+ 
+        <p:submenu label="PRODUTOS" icon="pi pi-tags">
+             <p:menuitem value="Cadastrar produto"  url="vendas.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar produtos"/>
+        </p:submenu>
+ 
+        <p:submenu label="VENDAS" icon="pi pi-shopping-cart">
+          <p:menuitem value="Cadastrar venda"  url="vendas.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar vendas"/>
+        </p:submenu>
+ 
+        <p:submenu label="ARQUIVOS" icon="pi pi-folder-open">
+              <p:menuitem value="Upload" url="upload.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Download"/>
+            <p:menuitem value="Arquivos" url="arquivos.xhtml"/>
+        </p:submenu>
+ 
+       
+ 
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:commandButton type="button" value="Logout" style="background-color:#6ab125;" icon="pi pi-home" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+	
+	<h:form enctype="multipart/form-data">
+            <p:growl id="messages" showDetail="true" />
+
+            <p:fileUpload mode="advanced"  listener="#{MBFichaClinica.upload}" />
+
+        </h:form>
+ 
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+            <p:graphicImage value="/resources/imagens/carregando.gif" alt="" style="width:50px; margin-top:15px;"/>
+</p:dialog>
+
+
+
+</h:body>
+</html>
