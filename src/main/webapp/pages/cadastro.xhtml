@@ -209,7 +209,14 @@
  
         <f:facet name="options">
             <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton value="Logout" actionListener="#{user.Sair}" style="background-color:#6ab125;" icon="pi pi-home" />
+            
+            
+            
+        <p:splitButton value="Usuario"  icon="pi pi-save">
+	            <p:menuitem value="Alterar senha" action="#{buttonView.update}" icon="pi pi-refresh"/>
+	            <p:divider />
+	            <p:menuitem value="Sair" actionListener="#{user.Sair}" icon="pi pi-home"/>
+        </p:splitButton>
         </f:facet>
         
         

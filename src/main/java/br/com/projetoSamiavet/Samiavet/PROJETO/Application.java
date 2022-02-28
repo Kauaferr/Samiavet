@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.appAuth;
 import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.loginAuth;
+import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.mudarSenhaAuth;
 
 
 /**
@@ -39,6 +40,18 @@ public class Application extends SpringBootServletInitializer{
             
         registrationBean.setFilter(new appAuth());
         registrationBean.addUrlPatterns("/pages/*");
+        registrationBean.setOrder(2);
+            
+        return registrationBean;    
+    }
+    
+    @Bean
+    public FilterRegistrationBean<mudarSenhaAuth> recuperarSenhaFiltro(){
+        FilterRegistrationBean<mudarSenhaAuth> registrationBean 
+          = new FilterRegistrationBean<>();
+            
+        registrationBean.setFilter(new mudarSenhaAuth());
+        registrationBean.addUrlPatterns("/seguranca/mudar.xhtml");
         registrationBean.setOrder(2);
             
         return registrationBean;    

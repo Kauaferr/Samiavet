@@ -49,7 +49,7 @@
             <p:growl autoUpdate="true"/>
             
             <div  class="centerDiv" style="width: 400px">
-                <p:panel>
+            <p:panel>
                     <f:facet name="header">REALIZAR LOGIN</f:facet>
             <h:panelGrid columns="2">
             
@@ -65,17 +65,54 @@
                 
             </h:panelGrid>
                     <p:commandButton value="Logar" actionListener="#{user.Logar}" style= "width:180px; margin-left:40px;" update=":msgGlobal"/>
+               
+
                 </p:panel>
             </div>
         </h:form>
+         <p:panel style="width: 400px">
+        
+        <h:form>
+         
+			<p:commandLink value="Esqueceu a senha?"  oncomplete="PF('dialogRecuperar').show()" actionListener="#{recuperarSenhaBean.enviarEmailRecuperacao}" update=":msgGlobal" />
+        	<p:commandLink value="Alterar senha?" style="margin-left:50px;"  actionListener="#{recuperarSenhaBean.printar}" update=":msgGlobal" />
+        	
+        </h:form>
+        </p:panel>
 		</center>
+ 
+ 
+ 
+  <p:dialog header="RECUPERAR SENHA" showEffect="blind" hideEffect="explode"  widgetVar="dialogRecuperar" height="300px" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogRecuperar">
+
+
+
+				<h:form id="formComprovante">
+				
+				<div class="p-col-12 p-md-4">
+            		<p:staticMessage severity="info" summary="OBS:" detail="Código de recuperação foi enviado para o e-mail padrão do sistema." style="width: 100%"/>
+        		</div>
+					<p:panelGrid columns="2" style="margin-left:3px; width:100%;">
+					
+						<p:inputText style="width:100%;" value="#{recuperarSenhaBean.codigoInserido}"/>
+						
+						<p:commandButton value="RECUPERAR SENHA" actionListener="#{recuperarSenhaBean.direcionarPagina}" style="width:100%;" update=":msgGlobal"/>
+					
+					</p:panelGrid>
+				
+				
+				
+				<br/><br/><br/><h3>Não recebeu o e-mail?</h3>
+				<p:commandButton value="REENVIAR CÓDIGO"/>
+				
+				</h:form>
+    </p:dialog>
  
 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
 <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
             <p:graphicImage value="/resources/imagens/carregando.gif" alt="" style="width:50px; margin-top:15px;"/>
 </p:dialog>
-
 
 
 </h:body>

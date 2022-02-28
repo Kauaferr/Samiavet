@@ -2,6 +2,7 @@ package br.com.projetoSamiavet.Samiavet.PROJETO.bean;
 
 import java.io.IOException;
 
+
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -40,12 +41,7 @@ public class LoginController {
 	
 	@PostConstruct
 	public void carregar() {
-		Usuario user = new Usuario();
-		user.setLogin("samia");
-		user.setSenha("admin");
 		
-		
-		this.userService.cadastrar(user);
 	}
 	
 	public void  Logar() throws IOException  {
@@ -64,7 +60,7 @@ public class LoginController {
 		}else if(this.logar.getSenha().equals(valorSenha)&&this.logar.getLogin().equals(valorLogin)) {
 			
 			HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			session.setAttribute("usuario", logar);
+			session.setAttribute("usuario", this.logar);
 			 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		        ec.redirect(ec.getRequestContextPath() + "/pages/cadastro.xhtml");	
 		}

@@ -45,7 +45,9 @@ public class UsuarioService {
 		return valorSenha;
 	}
 	
-	
+	public List<Usuario> retornaLista(){
+		return this.user.findAll();
+	}
 	
 	
 	

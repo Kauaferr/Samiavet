@@ -14,6 +14,7 @@ br\com\projetoSamiavet\Samiavet\PROJETO\service\RXService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\dto\VendasDTO.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosImagens.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\CTService.class
+br\com\projetoSamiavet\Samiavet\PROJETO\filtros\appAuth.class
 br\com\projetoSamiavet\Samiavet\PROJETO\response\AgendamentoResponse.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\SVService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\USService.class
@@ -33,12 +34,14 @@ br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosES.class
 br\com\projetoSamiavet\Samiavet\PROJETO\controllers\ArquivoController.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosUS.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\VendasRepository.class
+br\com\projetoSamiavet\Samiavet\PROJETO\bean\LoginController.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\USRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosGeral.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\ProdutosRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosSV.class
 br\com\projetoSamiavet\Samiavet\PROJETO\dto\FichaClinicaDto.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\AgendamentoRepository.class
+br\com\projetoSamiavet\Samiavet\PROJETO\filtros\loginAuth.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\RXRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\CTRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\dto\ProdutosDTO.class
@@ -46,14 +49,17 @@ br\com\projetoSamiavet\Samiavet\PROJETO\service\VendasService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\FURepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\bean\ScheduleJava8View.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\ArquivosCT.class
+br\com\projetoSamiavet\Samiavet\PROJETO\service\UsuarioService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\controllers\VendasController.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\Ficha_ClinicaService.class
+br\com\projetoSamiavet\Samiavet\PROJETO\repository\UsuarioRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\AgendamentoService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\bean\ScheduleJava8View$1.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\ImagensRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\FichaClinica.class
 br\com\projetoSamiavet\Samiavet\PROJETO\service\ProdutosService.class
 br\com\projetoSamiavet\Samiavet\PROJETO\util\JsfUtil.class
+br\com\projetoSamiavet\Samiavet\PROJETO\controllers\LoginController.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\SVRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\repository\Ficha_ClinicaRepository.class
 br\com\projetoSamiavet\Samiavet\PROJETO\response\Ficha_ClinicaResponse.class
@@ -63,3 +69,4 @@ br\com\projetoSamiavet\Samiavet\PROJETO\domain\ProdutosSelecionados.class
 br\com\projetoSamiavet\Samiavet\PROJETO\Application.class
 br\com\projetoSamiavet\Samiavet\PROJETO\domain\Produtos.class
 br\com\projetoSamiavet\Samiavet\PROJETO\bean\VendasBean.class
+br\com\projetoSamiavet\Samiavet\PROJETO\domain\Usuario.class

@@ -13,9 +13,6 @@
 	<h:outputScript library="js" name="scripts.js"/>
 	<link rel="icon" href="../resources/imagens/SamiaVet.png" />
 	
-</h:head>
-<h:body style="background-color:#f3f3f3; font-family: 'Open Sans', sans-serif !important;" onload="chamar()">
-	
 	
 	<style>
 	
@@ -30,56 +27,73 @@
     		background-color: black;
 		}
 	</style>
-		<p:message id="msg"/>
 	
 	
-		<div class="div-top">
+</h:head>
+
+
+		
+<h:body style="background-color:#f3f3f3; font-family: 'Open Sans', sans-serif !important;" onload="chamar()">
+	                    <p:growl id="msg"/>
+	
+ <div class="div-top">
 				<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
 				<div style="float:right; margin-top:10px;">
         			<p:clock pattern="HH:mm:ss"/>
 				</div>
-	
-	</div>
-	
-	
-		<center>
+		</div>
 		
-        <h:form style="margin-top:200px;">
-            
-            <p:growl autoUpdate="true"/>
-            
-            <div  class="centerDiv" style="width: 400px">
-            <p:panel>
-                    <f:facet name="header">RECUPERAR SENHA</f:facet>
-            <h:panelGrid columns="2">
-            
-            
+		
+		
+		
+		
+				<center>
+		
+            <h:form id="formCadastrar" style="margin-top:200px;">
+        
+                    <div  class="centerDiv" style="width: 400px">
+        
+				        <p:panel header="RECUPERAR SENHA">
+						            <h:panelGrid columns="2">
+							
+				           
             	Nova senha:
-                <h:inputText id="txtLogin" value="#{recuperarSenhaBean.novaSenha}" required="true" label="Login"
+                <h:inputSecret id="txtLogin" value="#{recuperarSenhaBean.novaSenha}" required="true" label="Login"
                                style="#{ component.valid ? '' : 'border-color:red;'}"/>
                 
                 
                 Confirmar nova senha:
                 <h:inputSecret id="txSenha" value="#{recuperarSenhaBean.confirmarSenha}" required="true" label="Senha"
                                style="#{ component.valid ? '' : 'border-color:red;'}"/>
+                   </h:panelGrid>            
                 
-            </h:panelGrid>
-                    <p:commandButton value="MUDAR SENHA" actionListener="#{recuperarSenhaBean.recuperarSenha}" style= "width:180px; margin-left:40px;" update=":msg"/>
+                    <p:commandButton value="MUDAR SENHA" actionListener="#{recuperarSenhaBean.recuperarSenha}" style= "width:180px; margin-left:120px;" update=":msg"/>
                
-
-                </p:panel>
-            </div>
-        </h:form>
-      
+				           
+						    
+				       	 </p:panel>
+        </div>
+ 	
+  		
+    </h:form>
+	
 		</center>
- 
- 
- 
+        
+       
+        
 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
 <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
             <p:graphicImage value="/resources/imagens/carregando.gif" alt="" style="width:50px; margin-top:15px;"/>
 </p:dialog>
+  <script>
+  
+  
+  function resetar(){
+      window.location.reload();
+  }
 
+  
+  </script>
 </h:body>
 </html>
