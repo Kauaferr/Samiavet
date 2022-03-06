@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosCT;
+import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosES;
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosImagens;
 import br.com.projetoSamiavet.Samiavet.PROJETO.repository.ImagensRepository;
 
@@ -41,6 +42,10 @@ public class ArquivosImagensService {
 		}
 		
 		return nomeImagem;
+	}
+	
+	public List<ArquivosImagens> buscarPorNome(String nome){
+		return this.imagensRepository.findByNomeImagem(nome);
 	}
 }
 

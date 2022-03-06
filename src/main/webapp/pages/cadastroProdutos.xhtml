@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -7,7 +7,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     >
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>SAMIAVET</title>
 	<h:outputStylesheet library="css" name="style.css"/>
 	<h:outputScript library="js" name="scripts.js"/>
@@ -173,6 +173,13 @@
 		.inputCodigo{
 			height: 40px;
 		}
+		button.ui-button{
+ 			background-color:#6ab125;
+ 			border:0px;
+ 		}
+ 		button.ui-button:hover{
+ 			background-color:#78b83b;
+ 		}
 		.div-top{
 		 
 		     width: 100% !important;
@@ -183,6 +190,7 @@
 		.ui-clock{
     		background-color: black;
 		}
+	
 	</style>
 	
 	<div class="div-top">
@@ -205,34 +213,40 @@
         </p:submenu>
  
         <p:submenu label="PRODUTOS" icon="pi pi-tags">
-             <p:menuitem value="Cadastrar produto"  url="vendas.xhtml"/>
- 			<p:separator />
-            <p:menuitem value="Consultar produtos"/>
+             <p:menuitem value="Cadastrar produto"  url="cadastroProdutos.xhtml"/>
         </p:submenu>
  
         <p:submenu label="VENDAS" icon="pi pi-shopping-cart">
           <p:menuitem value="Cadastrar venda"  url="vendas.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Consultar vendas"/>
+            <p:menuitem value="Consultar vendas" url="consultaVendas.xhtml"/>
         </p:submenu>
  
         <p:submenu label="ARQUIVOS" icon="pi pi-folder-open">
               <p:menuitem value="Upload" url="upload.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Download"/>
             <p:menuitem value="Arquivos" url="arquivos.xhtml"/>
         </p:submenu>
  
        
- 
+ 		 <p:submenu label="SERVIÇOS" icon="pi pi-folder-open">
+              <p:menuitem value="Cadastrar serviços" url="cadastroServicos.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar servicos" url="consultaServicos.xhtml"/>
+        </p:submenu>
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton type="button" value="Logout" style="background-color:#6ab125;" icon="pi pi-home" />
+           
+ 			<p:commandButton id="basic" icon ="pi pi-user"  type="button" style="background-color:#f8f9fa; color: black; border:0px;"/>			
+ 			<p:overlayPanel for="basic" style="width:350px">
+		     <p:commandButton value="Sair" actionListener="#{user.Sair}"  style="width:100%;border-color:white; "/>
+        </p:overlayPanel>	     
         </f:facet>
     </p:menubar>
 </h:form>
 	
-	<p:growl id="msgGlobal" life="5000" showDetail="true"/>
+		<p:growl id="msgGlobal" life="5000" />
+	
+	
 	
 	
 			
@@ -258,130 +272,195 @@
     
     </script>
 		
- <p:fieldset  toggleable="true" toggleSpeed="500">
+ 	<p:fieldset  toggleable="true" toggleSpeed="500">
             <h:form id="formCadastrar">
         
-				        <p:panel header="CADASTRAR UM NOVO PRODUTO">
+				  <p:panel header="CADASTRAR UM NOVO PRODUTO">
 							
-				            <br></br>
-				            <h:outputText  value="C�digo de barras: " styleClass="outPutTexts"/>
-						    <p:inputText  styleClass="inputCodigo" value="#{produtosBean.produto.codigoBarras}"  placeholder="Codigo Barras"/>
-		 
-		                
-		                
-		                    <br/><br/><br/>
-		                    <h:outputText  value="Nome do produto: " styleClass="outPutTexts"/>
-						    <p:inputText  styleClass="inputs" value="#{produtosBean.produto.nome}" placeholder="Nome produto"/>
-		 
-		 					<br/><br/><br/>
-						    
-		 
-		                   	
-						    <h:outputText  value="Pre�o compra: " styleClass="outPutTexts"/>
-               				 <p:inputNumber id="input1" value="#{produtosBean.precoCompra}" modifyValueOnWheel="false" placeholder="Pre�o Compra" style="margin-left:5px;"/>
-		 					
-						 	
-		                    <h:outputText value="Pre�o venda: " styleClass="outPutTexts"/>
-							 <p:inputNumber  value="#{produtosBean.precoVenda}" modifyValueOnWheel="false" placeholder="Prec�o venda" style="margin-left:5px;"/>
+			            <br></br>
+			            <h:outputText  value="Código de barras: " styleClass="outPutTexts"/>
+					    <p:inputText  styleClass="inputCodigo" value="#{produtosBean.produto.codigoBarras}"  placeholder="Codigo Barras"/>
+	 
+	                    <br/><br/><br/>
+	                    <h:outputText  value="Nome do produto: " styleClass="outPutTexts"/>
+					    <p:inputText  styleClass="inputs" value="#{produtosBean.produto.nome}" placeholder="Nome produto"/>
+	 
+	 					<br/><br/><br/>
+					    
+	                   	
+					    <h:outputText  value="Preço compra: " styleClass="outPutTexts"/>
+              			<p:inputNumber id="input1" value="#{produtosBean.precoCompra}"   placeholder="Preço Compra" style="margin-left:5px;"/>
+              		
+	                    <h:outputText value="Preço venda: " styleClass="outPutTexts"/>
+						<p:inputNumber  value="#{produtosBean.precoVenda}" placeholder="Precço venda"  style="margin-left:5px;"/>
 						
-						 	<h:outputText  value="Estoque: " styleClass="outPutTexts"/>
-						 	<p:spinner id="minMax" min="0" suffix=" UNIDADES" placeholder="Estoque" value="#{produtosBean.produto.quantidade_estoque}" style="margin-left:5px;"/> 
-		                    <br/>
-						 	<br/>
-							<h:outputText  value="Distribuidora: " styleClass="outPutTexts"/>
-						    <p:inputText  styleClass="inputs"  placeholder="Distribuidora" value="#{produtosBean.produto.distribuidora}"/>		                    
-				               
-				       		 <br/>
-						 	<br/>
-							<h:outputText  value="Empresa: " styleClass="outPutTexts"/>
-						    <p:inputText  styleClass="inputs"  placeholder="Empresa" value="#{produtosBean.produto.empresa}"/>
-						   
-						   
-						    <br/>
-						 	<br/>
-							<h:outputText  value="Data validade: " styleClass="outPutTexts"/>
-						   <p:inputMask id="date"  mask="99/99/9999" styleClass="inputData"  placeholder="Data Valid." value="#{produtosBean.produto.data_validade}"/>
+				
+					
+					 	<h:outputText  value="Estoque: " styleClass="outPutTexts"/>
+					 	<p:spinner id="minMax" min="0" suffix=" UNIDADES" placeholder="Estoque" value="#{produtosBean.produto.quantidade_estoque}" style="margin-left:5px;"/> 
+	                    <br/>
+					 	<br/>
+						<h:outputText  value="Distribuidora: " styleClass="outPutTexts"/>
+					    <p:inputText  styleClass="inputs"  placeholder="Distribuidora" value="#{produtosBean.produto.distribuidora}"/>		                    
+			               
+			       		 <br/>
+					 	<br/>
+						<h:outputText  value="Empresa: " styleClass="outPutTexts"/>
+					    <p:inputText  styleClass="inputs"  placeholder="Empresa" value="#{produtosBean.produto.empresa}"/>
+					   
+					   
+					    <br/>
+					 	<br/>
+						<h:outputText  value="Data validade: " styleClass="outPutTexts"/>
+					  	<p:inputMask id="date"  mask="99/99/9999" styleClass="inputData"  placeholder="Data Valid." value="#{produtosBean.produto.data_validade}"/>
+					    
+					    <br/><br/>
+					    <p:commandButton value="CADASTRAR" actionListener="#{produtosBean.cadastrar}" update=":formCadastrar :formProdutos:tabelaProdutos :msgGlobal" style="width:200px;"/>
+					    
 						    
-						    <br/><br/>
-						    <p:commandButton value="CADASTRAR" oncomplete="resetar();" actionListener="#{produtosBean.cadastrar}" update=":formCadastrar :msgGlobal" style="background-color:#6ab125; width:200px;"/>
-						    
-						    
-				       	 </p:panel>
-        
- 	
-  		
-    </h:form>
+				    </p:panel>
+    		</h:form>
 	
 		
-        </p:fieldset>
+	  </p:fieldset>
         
         
-      <p:dataTable var="produto" value="#{produtosBean.produtos}" stickyHeader="true" stickyTopAt=".layout-topbar">
-      
-      
-      
-      
-      
-      		<p:column headerText="C�DIGO DE BARRAS">
-      		
-      			<p:barcode value="#{produto.codigoBarras}" type="code39"/>
-      			
-      		</p:column>
-      		
-      
-      		
-     		<p:column headerText="NOME">
-      		
-      			 <h:outputText value="#{produto.nome}" />
-      			
-      		</p:column>
-      
-      
-     		 <p:column headerText="PRE�O COMPRA">
-      		
-      			 <h:outputText value="#{produto.preco_compra}" />
-      			
-      		</p:column>
-      
-      
-      		 <p:column headerText="PRE�O VENDA">
-      		
-      			 <h:outputText value="#{produto.preco_venda}" />
-      			
-      		</p:column>
-      		
-      		 <p:column headerText="DISTRUIBUIDORA">
-      		
-      			 <h:outputText value="#{produto.distribuidora}" />
-      			
-      		</p:column>
-      		
-      		<p:column headerText="EMPRESA">
-      		
-      			 <h:outputText value="#{produto.empresa}" />
-      			
-      		</p:column>
-      		
-      		<p:column headerText="DATA REGISTRO">
-      		
-      			 <h:outputText value="#{produto.data_registro}" />
-      			
-      		</p:column>
-      
-      
-     		 <p:column headerText="DATA VALIDADE">
-      		
-      			 <h:outputText value="#{produto.data_validade}" />
-      			
-      		</p:column>
-      		
-      		<p:column headerText="ESTOQUE">
-      		
-      			 <h:outputText value="#{produto.quantidade_estoque}" />
-      			
-      		</p:column>
-      </p:dataTable>  
-        
+      <fieldset class="fieldsetBusca" style="margin-top:30px;">
+			  <h:form id="pesquisa">
+		    	<p:autoComplete value="#{produtosBean.nomeBusca}" id="input" placeholder="Buscar animal.." styleClass="input" completeMethod="#{produtosBean.completarNome}" scrollHeight="250"/><p:commandButton actionListener="#{produtosBean.pesquisarProdutos}" style="margin-left:5px;" icon="pi pi-search" update=":formProdutos :pesquisa :msgGlobal" styleClass="botaoPesquisar"/><p:commandButton  icon="pi pi-undo" style="margin-left:5px;" actionListener="#{produtosBean.resetar}"  update=":formProdutos :pesquisa :msgGlobal" styleClass="botaoResetar"/>
+		    </h:form>
+	  </fieldset>  
+     <h:form id="formProdutos">
+	      <p:dataTable var="produto" value="#{produtosBean.produtos}" stickyHeader="true" stickyTopAt=".layout-topbar" emptyMessage="Nenhum cadastro inserido"  paginator="true" rows="10" 
+			    			 paginatorTemplate="{CurrentPageReport} {FirstPageLink}  {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+			                 currentPageReportTemplate="{startRecord}-{endRecord}"
+			                 rowsPerPageTemplate="10,20,30,40,50" id="tabelaProdutos">
+	      
+	      
+	      		<p:column headerText="CÓDIGO DE BARRAS">
+	      			<p:barcode value="#{produto.codigoBarras}" type="code39"/>
+	      		</p:column>
+	      		
+	     		<p:column headerText="NOME">
+	      			 <h:outputText value="#{produto.nome}" />
+	      		</p:column>
+	      
+	     		 <p:column headerText="PREÇO COMPRA (R$)" style="width:80px;">
+	      			 <h:outputText value="#{produto.preco_compra}" />
+	      		</p:column>
+	      
+	      		 <p:column headerText="PREÇO VENDA (R$)" style="width:80px;">
+	      			 <h:outputText value="#{produto.preco_venda}" />
+	      		</p:column>
+	      		
+	      		 <p:column headerText="DISTRUIBUIDORA" style="width:100px;">
+	      			 <h:outputText value="#{produto.distribuidora}" />
+	      		</p:column>
+	      		
+	      		<p:column headerText="EMPRESA">
+	      			 <h:outputText value="#{produto.empresa}" />
+	      		</p:column>
+	      		
+	      		<p:column headerText="DATA REGISTRO">
+	      			 <h:outputText value="#{produto.data_registro}" />
+	      		</p:column>
+	      
+	     		 <p:column headerText="DATA VALIDADE">
+	      			 <h:outputText value="#{produto.data_validade}" />
+	      		</p:column>
+	      		
+	      		<p:column headerText="ESTOQUE" style="width:50px;">
+	      			 <h:outputText value="#{produto.quantidade_estoque}" />
+	      		</p:column>
+	      		
+	      		<p:column headerText="OPÇÕES" style="width:50px;">
+	      			 
+	      			<p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogEditar').show()" update=":formEditar" >
+	      				<f:setPropertyActionListener target="#{produtosBean.produto}" value="#{produto}"/>
+	      			</p:commandButton>
+	      			
+	      			
+	      			<p:commandButton icon="pi pi-trash" style="margin-top:5px;" update=":formExcluir" onclick="PF('dialogExcluir').show()">
+	      			
+	      				<f:setPropertyActionListener target="#{produtosBean.produto}" value="#{produto}"/>
+	      				
+	      			</p:commandButton>
+	      		</p:column>
+	      		
+	      </p:dataTable>  
+      </h:form>
+      <p:dialog header="EDITAR PRODUTO" showEffect="blind" hideEffect="explode" widgetVar="dialogEditar" height="500" minimizable="true" maximizable="true" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogEditar">
+    
+    
+     		  <h:form id="formEditar">
+    
+       					 <p:panel header="CADASTRAR UM NOVO PRODUTO">
+								
+					           
+			                    <h:outputText  value="Nome do produto: " styleClass="outPutTexts"/>
+							    <p:inputText  styleClass="inputs" value="#{produtosBean.produto.nome}" placeholder="Nome produto"/>
+			 
+			 					<br/><br/><br/>
+							    
+			                   	
+							    <h:outputText  value="Preço compra: " styleClass="outPutTexts"/>
+		              			<p:inputText id="input1" value="#{produtosBean.produto.preco_compra}"  placeholder="Preço Compra" style="margin-left:5px;"/>
+		              			
+		              			
+		              			
+			 					
+			                    <h:outputText value="Preço venda: " styleClass="outPutTexts"/>
+								<p:inputText  value="#{produtosBean.produto.preco_venda}" placeholder="Precço venda" style="margin-left:5px;"/>
+								
+									
+							
+							 	<h:outputText  value="Estoque: " styleClass="outPutTexts"/>
+							 	<p:spinner id="minMax" min="0" suffix=" UNIDADES" placeholder="Estoque" value="#{produtosBean.produto.quantidade_estoque}" style="margin-left:5px;"/> 
+			                    <br/>
+							 	<br/>
+								<h:outputText  value="Distribuidora: " styleClass="outPutTexts"/>
+							    <p:inputText  styleClass="inputs"  placeholder="Distribuidora" value="#{produtosBean.produto.distribuidora}"/>		                    
+					               
+					       		 <br/>
+							 	<br/>
+								<h:outputText  value="Empresa: " styleClass="outPutTexts"/>
+							    <p:inputText  styleClass="inputs"  placeholder="Empresa" value="#{produtosBean.produto.empresa}"/>
+							   
+							   
+							    <br/>
+							 	<br/>
+								<h:outputText  value="Data validade: " styleClass="outPutTexts"/>
+							  	<p:inputMask id="date"  mask="99/99/9999" styleClass="inputData"  placeholder="Data Valid." value="#{produtosBean.produto.data_validade}"/>
+							    
+							    <br/><br/>
+					    		<p:commandButton value="CADASTRAR" actionListener="#{produtosBean.editarCadastro()}" oncomplete="PF('dialogEditar').hide()"  update=":formCadastrar :formProdutos:tabelaProdutos :msgGlobal" style="width:200px;"/>
+							    
+								    
+				    </p:panel>
+    		</h:form>
+    			
+    </p:dialog>
+   
+   
+   
+    <p:dialog header="EXCLUIR PRODUTO" widgetVar="dialogExcluir" showEffect="blind" hideEffect="explode"  height="130" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogExcluir">
+
+
+
+            <h:form id="formExcluir">
+
+	            <h:outputText value="CODIGO DE BARRAS: " styleClass="titulo" style="margin-left:10px; font-weight:bold;"/>
+	            <br/><p:barcode value="#{produtosBean.produto.codigoBarras}" type="code39"/>
+	            
+	            
+	            <br/> <br/><p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{produtosBean.excluir}"  update=":formProdutos:tabelaProdutos :msgGlobal" oncomplete="PF('dialogExcluir').hide()" />
+	            <p:commandButton value="CANCELAR" onclick="PF('dialogExcluir').hide()" style="margin-left:5px;"/>
+            
+            
+            </h:form>
+
+
+    </p:dialog> 
 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
 <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -393,7 +472,25 @@
   function resetar(){
       window.location.reload();
   }
+  function mascara(o,f){ 
+		v_obj=o 
+		v_fun=f 
+		setTimeout("execmascara()",1) 
+	} 
 
+	function execmascara(){ 
+		v_obj.value=v_fun(v_obj.value) 
+	} 
+
+	function moeda(v){ 
+		v=v.replace(/\D/g,""); // permite digitar apenas numero 
+		v=v.replace(/(\d{1})(\d{15})$/,"$1.$2") // coloca ponto antes dos ultimos digitos 
+		v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos 
+		v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos 
+		v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos 
+		v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos 
+		return v; 
+	}
   
   </script>
 </h:body>

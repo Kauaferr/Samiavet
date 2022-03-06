@@ -185,23 +185,57 @@
 	
 		<p:growl id="msgGlobal" life="5000" />
 	
-    <h:form id="form-vendas">
+	
     
-		<p:dataTable id="tabela-vendas" value="#{MBVendas.listaProdutosSelecionados}" var="item" rows="10" emptyMessage="Digite o código de barras do produto">
+    
+    <p:fieldset  toggleable="true" toggleSpeed="500">
+            <h:form id="formCadastrar">
+        
+				  <p:panel header="CADASTRAR UM NOVO PRODUTO">
+						<p:panelGrid columns="2">
+	                    
+		                    <h:outputText  value="TIPO" styleClass="outPutTexts"/>
+						    <p:inputText  styleClass="inputs" value="#{MBServicos.servicoTemp.tipo}" placeholder="Tipo serviço"/>
+		 					
+				            <h:outputText  value="DESCRIÇÃO" styleClass="outPutTexts"/>
+						    <p:inputText  styleClass="inputCodigo" value="#{MBServicos.servicoTemp.descricao}"  placeholder="Descrição"/>
+							
+						    <h:outputText  value="VALOR" styleClass="outPutTexts"/>
+	              			<p:inputText id="input1" value="#{MBServicos.servicoTemp.valor}"   placeholder="Valor" style="margin-left:5px;"/>
+	              			
+	              			
+						 </p:panelGrid>  
+						 
+						 <p:panelGrid columns="1" style="width:340px;">
+						 
+						 
+						 		<p:commandButton value="CADASTRAR" actionListener="#{MBServicos.adicionarServicoLista}" update=":formTabela :formCadastrar :msgGlobal" style="width:100%;"/>
+						 	
+						 
+						 </p:panelGrid>
+				    </p:panel>
+				    
+				   		
+    		</h:form>
+	
 		
-			<f:facet name="header">
+	  </p:fieldset>
+    
+    
+    
+    
 	
-	
-						<h:outputText value="CÓDIGO DE BARRAS: " styleClass="titulo"/>
-						
-						<p:autoComplete styleClass="input-codigo" value="#{MBVendas.codigoBarrasConsulta}" completeMethod="#{MBVendas.completarCodigoBarras}" scrollHeight="250"/>
-						
-						<p:commandButton value="ADICIONAR" style="margin-left:20px; background-color:#6ab125;" actionListener="#{MBVendas.listarProdutosSelecionados}" update=":form-vendas:tabela-vendas :msgGlobal"/>
-						
-	
-	
-	
-	</f:facet>
+		
+		
+		<h:form id="formTabela">
+		
+		
+		
+		
+    
+    
+		<p:dataTable id="tabela-servicos" value="#{MBServicos.listaServicoTemp}" var="item" rows="10" emptyMessage="Cadastre um serviço logo em cima">
+		
 		
 		<f:facet name="footer">
 		
@@ -209,28 +243,14 @@
 			<p:separator/>		
 				<h:outputText value="Nome Cliente: " styleClass="titulo"/>
 				
-				<p:inputText styleClass="inputs" value="#{MBVendas.vendas.nome_cliente}" />
+				<p:inputText styleClass="inputs" value="#{MBServicos.nomeCliente}" />
 			
-				<h:outputText value="CPF Cliente: " styleClass="titulo"/>
-			
-				 <p:inputMask   mask="999.999.999-99" styleClass="input-cpf" value="#{MBVendas.vendas.cpf}" />
+				<h:outputText  value="NOME ANIMAL" styleClass="outPutTexts" style="margin-left:5px;"/>
+				<p:inputText  styleClass="inputs" value="#{MBServicos.nomeAnimal}" placeholder="Nome animal"/>
 				
-			 <h:outputText  value="Taxa: " styleClass="titulo"/>
-			
-			<p:selectOneMenu id="selectOne" styleClass="input-taxa"  placeholder="TAXA" value="#{MBVendas.vendas.taxa}">
-   					        <f:selectItem itemLabel="0%" itemValue="0" />
-					        <f:selectItem itemLabel="10%" itemValue="10" />
-					        <f:selectItem itemLabel="20%" itemValue="20" />
-					        <f:selectItem itemLabel="30%" itemValue="30" />
-					        <f:selectItem itemLabel="40%" itemValue="40" />
-					        <f:selectItem itemLabel="50%" itemValue="50" />
-
-			    </p:selectOneMenu>
-			    
-			    
 			 <h:outputText  value="Parcelas: " styleClass="titulo"/>
 			
-			<p:selectOneMenu  styleClass="input-taxa"  placeholder="PARCELAS" value="#{MBVendas.vendas.parcelas}" >
+			<p:selectOneMenu  styleClass="input-taxa"  placeholder="PARCELAS" value="#{MBServicos.parcelas}" >
 					        <f:selectItem itemLabel="1x" itemValue="1" />
 					        <f:selectItem itemLabel="2x" itemValue="2" />
 					        <f:selectItem itemLabel="3x" itemValue="3" />
@@ -243,7 +263,7 @@
 			    <br/>
 		 <h:outputText  value="FORMA DE PAGAMENTO: " styleClass="titulo"/>
 				<br/>
-		 <p:selectOneRadio  unselectable="true"  value="#{MBVendas.vendas.forma_pagamento}" >
+		 <p:selectOneRadio  unselectable="true"  value="#{MBServicos.formaPag}" >
             <f:selectItem itemLabel="A VISTA" itemValue="A VISTA" />
             <f:selectItem itemLabel="CRÉDITO" itemValue="CRÉDITO" />
             <f:selectItem itemLabel="DÉBITO" itemValue="DÉBITO" />
@@ -260,14 +280,14 @@
 		
 					<h:outputText value="TOTAL: " styleClass="titulo"/>
 					
-					<h:outputText styleClass="titulo" value="#{MBVendas.total}" readonly="true"/>
-					<p:commandButton value="CALCULAR TOTAL" style="margin-left:10px; background-color:#6ab125" actionListener="#{MBVendas.resetarTotal}" update=":form-vendas:tabela-vendas :msgGlobal"/>
+					<h:outputText styleClass="titulo" value="#{MBServicos.total}R$" readonly="true" style="font-weight: bold;"/>
+					<p:commandButton value="CALCULAR TOTAL" style="margin-left:10px; background-color:#6ab125" actionListener="#{MBServicos.calcularTotal}" update=":formTabela:tabela-servicos :msgGlobal"/>
 					<p:commandButton icon="pi pi-file-o" style="float:right; margin-left:10px; background-color:#6ab125" oncomplete="PF('dialogComprovante').show()" actionListener="#{MBVendas.gerarComprovante}"/>
-					
+					<p:commandButton icon="pi pi-percentage" style="float:right; margin-left:10px; background-color:#6ab125" oncomplete="PF('dialogClcular').show()" actionListener="#{MBVendas.gerarComprovante}"/>
 					
 				
 				<p:panelGrid columns="2" style="margin-top:10px;">
-				<p:commandButton value="REGISTRAR VENDA"   style="width:50%; margin-left:150px; background-color:#6ab125" actionListener="#{MBVendas.salvar}"  update=":form-vendas:tabela-vendas :msgGlobal :formComprovante">
+				<p:commandButton value="REGISTRAR SERVIÇO"   style="width:50%; margin-left:150px; background-color:#6ab125" actionListener="#{MBServicos.cadastrar}"  update=":formTabela :msgGlobal">
 					
 					</p:commandButton>
 					<p:commandButton value="CANCELAR" style="width:50%; margin-left:150px; background-color:#6ab125" onclick="PF('dialogCancelar').show()"/>
@@ -276,106 +296,89 @@
 		</f:facet>
 		
 		
-			<p:column headerText="CÓDIGO BARRAS">
-				 <h:outputText value="#{item.codigoBarras}" />
-				
-			</p:column>
-		
-		
-			<p:column headerText="NOME PRODUTO">
-				<h:outputText value="#{item.nome}" />
-			</p:column>
-		
-		
-		 
-			<p:column headerText="PREÇO COMPRA (R$)">
-				<h:outputText value="#{item.preco_compra}" />
-			</p:column>
+			  
+			   	 	<p:column headerText="TIPO" >
+			            <h:outputText value="#{item.tipo}" />
+			        </p:column>
+			        
+			        <p:column headerText="DESCRIÇÃO" >
+			            <h:outputText value="#{item.descricao}" />
+			        </p:column>
+			        
+			         <p:column headerText="ANIMAL" >
+			            <h:outputText value="#{item.nomeAnimal}" />
+			        </p:column>
+			        
+			        
+			         <p:column headerText="VALOR" >
+			            <h:outputText value="#{item.valor}R$" />
+			        </p:column>
+			        
+			        
+			        <p:column styleClass="coluna-opcoes">
+						<p:commandButton   icon="pi pi-minus"  onclick="PF('dialogExcluir').show()" update=":formExcluir" > <f:setPropertyActionListener target="#{MBServicos.servicoTemp}" value="#{item}"/></p:commandButton>
+					</p:column>
 			
-			
-			
-			<p:column headerText="PREÇO VENDA (R$)">
-				<h:outputText value="#{item.preco_venda}" />
-			</p:column>
-			
-			
-			
-			<p:column headerText="DISTRIBUIDORA">
-				<h:outputText value="#{item.distribuidora}" />
-			</p:column>
-			
-			
-			<p:column headerText="EMPRESA">
-				<h:outputText value="#{item.empresa}" />
-			</p:column>
-			
-			
-			
-			<p:column headerText="DATA REGISTRO">
-				<h:outputText value="#{item.data_registro}" />
-			</p:column>
-			
-			
-			<p:column headerText="VALIDADE">
-				<h:outputText value="#{item.data_validade}" />
-			</p:column>
-			
-			
-			<p:column headerText="ESTOQUE">
-				<h:outputText value="#{item.quantidade_estoque}" styleClass="input-quantidade"/>
-			</p:column>
-			
-			<p:column headerText="QNT" styleClass="input-quantidade">
-				<center><p:inputText value="#{item.quantidade_estoque_subtracao}" styleClass="input-quantidade"/></center>
-			</p:column>
-			
-			<p:column styleClass="coluna-opcoes">
-				<p:commandButton   icon="pi pi-trash" style="background-color:#6ab125" onclick="PF('dialogExcluir').show()" update=":formExcluir" actionListener="#{MBVendas.converter}"> <f:setPropertyActionListener target="#{MBVendas.produtosSelecionados}" value="#{item}"/></p:commandButton>
-			</p:column>
 			
 		</p:dataTable>
 				
 	
-	
+		
+		
+		
 		</h:form>
-		
-		
-		 <p:dialog header="REMOVER PRODUTO" showEffect="blind" hideEffect="explode"  widgetVar="dialogExcluir" height="80" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogExcluir">
-
-
-
-            <h:form id="formExcluir">
-    			
-	            <h:outputText value="CODIGO BARRAS:" styleClass="titulo" />
-	            <h:outputText value="#{MBVendas.produtosSelecionados.codigo_barras}" styleClass="titulo"></h:outputText>
-	            
-	            <br/>
-	            <br/>
-	           
-	            <p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{MBVendas.excluir}" style="background-color:#6ab125; margin-right:10px;" update=":form-vendas:tabela-vendas :msgGlobal" onclick="PF('dialogExcluir').hide()" />
-	            <p:commandButton value="CANCELAR" onclick="PF('dialogExcluir').hide()" style="background-color:#6ab125;"/>
-            
-            
-            
-            </h:form>
-
-
+    
+    
+         <p:dialog  showEffect="blind" hideEffect="explode"  widgetVar="dialogClcular" height="300" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogClcular">
+		    
+		    	<h:form id="formCalcular">
+		    	
+		    	
+				    	<p:card style="float:left;">
+								   		
+								   		<f:facet name="title">
+								   		
+								   			CALCULAR DESCONTO
+								   		
+								   		</f:facet>
+								   		
+										<p:panelGrid columns="2" >
+					                    
+											
+										    <h:outputText  value="VALOR" styleClass="outPutTexts"/>
+					              			<p:inputText  value="#{MBServicos.valorDesconto}"   placeholder="Valor" style="margin-left:5px;"/>
+					              			
+					              			<h:outputText  value="TAXA" styleClass="outPutTexts"/>
+					              			<p:inputText  value="#{MBServicos.taxa}"   placeholder="Taxa" style="margin-left:5px;"/>
+					              			
+										 </p:panelGrid> 
+										 <br/> 
+										 <h:outputText styleClass="titulo" value="TOTAL: #{MBServicos.valorTotalDesconto}R$" readonly="true" style="font-weight: bold;"/>
+										 <br/>
+										 <p:panelGrid columns="1" style="width:300px;">
+										 
+										 
+										 		<p:commandButton value="CALCULAR" actionListener="#{MBServicos.calcularDesconto}" update=":formCalcular :msgGlobal" style="width:100%;"/>
+										 	
+										 
+										 </p:panelGrid>
+								    </p:card>
+				    	
+				    	
+		    	</h:form>
     </p:dialog>
-    
-    
-    
      <p:dialog header="CANCELAMENTO" showEffect="blind" hideEffect="explode"  widgetVar="dialogCancelar" height="80" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogCancelar">
 
 
 
             <h:form id="formCancelar">
     			
-	            <h:outputText value="VOCÊ DESEJA MESMO CANCELAR ESSA VENDA?" styleClass="titulo" />
+	            <h:outputText value="VOCÊ DESEJA MESMO CANCELAR ESSES SERVIÇOS?" styleClass="titulo" />
 	            
 	            <br/>
 	            <br/>
-	            <p:commandButton value="SIM" style="background-color:#6ab125;" styleClass="botaoDeletar"  actionListener="#{MBVendas.cancelar}" update=":form-vendas:tabela-vendas :msgGlobal" onclick="PF('dialogCancelar').hide()" />
-	            <p:commandButton value="NÃO" onclick="PF('dialogCancelar').hide()" style="background-color:#6ab125;"/>
+	            <p:commandButton value="SIM"  styleClass="botaoDeletar"   actionListener="#{MBServicos.cancelarServicos}" update=":formTabela :msgGlobal" oncomplete="PF('dialogCancelar').hide()" />
+	            <p:commandButton value="NÃO" style="margin-left:5px;" onclick="PF('dialogCancelar').hide()" />
             
             
             
@@ -383,6 +386,31 @@
 
 
     </p:dialog>
+    
+    
+    
+    
+    
+		 <p:dialog header="REMOVER SERVIÇO" showEffect="blind" hideEffect="explode"  widgetVar="dialogExcluir" height="80" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogExcluir">
+
+
+
+            <h:form id="formExcluir">
+    			
+	            <h:outputText value="VOCÊ DESEJA MESMO EXCLUIR ESSE SERVIÇO?" styleClass="titulo" />
+	            
+	            <br/>
+	            <br/>
+	            <p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{MBServicos.excluir}" style="margin-right:10px;" update=":formTabela :msgGlobal" onclick="PF('dialogExcluir').hide()" />
+	            <p:commandButton value="CANCELAR" onclick="PF('dialogExcluir').hide()"/>
+            
+            
+            
+            </h:form>
+
+
+    </p:dialog>
+    
     
     
     
@@ -398,7 +426,7 @@
 					
 					<p:inputText placeholder="Digite o e-mail de destino" styleClass="input-codigo" value="#{MBVendas.email}"/>
 				 
-					<p:commandButton value="ENVIAR" style="background-color:#6ab125" actionListener="#{MBVendas.enviarEmail}" update=":formComprovante :msgGlobal"/>	 	
+					<p:commandButton value="ENVIAR" style="background-color:#6ab125" actionListener="#{MBServicos.enviarEmail}" update=":formComprovante :msgGlobal"/>	 	
 				 
 				  </p:panelGrid>
 				   <br/>
@@ -406,9 +434,9 @@
 				 
 				  <p:panelGrid columns="2" style="width:100%;">
 				  
-				      <p:commandButton icon =  "pi pi-download"  value="Baixar" ajax="false" actionListener="#{MBVendas.gerarComprovante}" style="width:100%;background-color:#6ab125">
+				      <p:commandButton icon =  "pi pi-download"  value="Baixar" ajax="false" actionListener="#{MBServicos.gerarComprovante}" style="width:100%;background-color:#6ab125">
 				    
-				    	<p:fileDownload value="#{MBVendas.file}"></p:fileDownload>
+				    	<p:fileDownload value="#{MBServicos.file}"></p:fileDownload>
 				    </p:commandButton>      
 				    
 				    
@@ -435,7 +463,25 @@
 		
 		document.querySelector('.data').textContent = dataAtual
 	}
-	
+    function mascara(o,f){ 
+    	v_obj=o 
+    	v_fun=f 
+    	setTimeout("execmascara()",1) 
+    } 
+
+    function execmascara(){ 
+    	v_obj.value=v_fun(v_obj.value) 
+    } 
+
+    function moeda(v){ 
+    	v=v.replace(/\D/g,""); // permite digitar apenas numero 
+    	v=v.replace(/(\d{1})(\d{15})$/,"$1.$2") // coloca ponto antes dos ultimos digitos 
+    	v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos 
+    	v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos 
+    	v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos 
+    	v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos 
+    	return v; 
+    }
     
     </script>
 

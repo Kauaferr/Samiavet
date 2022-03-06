@@ -17,15 +17,15 @@
 <h:body style="background-color:white; font-family: 'Open Sans', sans-serif !important;" onload="chamar()">
 <style>
 
-.labels{
+		.labels{
 
-	font-weight: bold;
-}
-.img-samiavet{
+			font-weight: bold;
+		}
+		.img-samiavet{
 			width:40%;
 		}
 
-.carregando{
+		.carregando{
 			width:50px;
 		}
 		.data{
@@ -34,13 +34,33 @@
     	    font-size: 11px !important;
     	    float:left;
 		}
-</style>
-
-
-	<p:growl id="msgGlobal" life="5000" showDetail="true"/>
-	<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
+		
+			button.ui-button{
+ 			background-color:#6ab125;
+ 			border:0px;
+ 		}
+ 		button.ui-button:hover{
+ 			background-color:#78b83b;
+ 		}
+		.div-top{
+		 
+		     width: 100% !important;
+		     background: url(../resources/imagens/bg.jpg) repeat-x !important;
+			 padding: 15px 0 0 0 !important;
+			 background-color: black;
+		}
+		.ui-clock{
+    		background-color: black;
+		}
 	
-	<div style="float:right; margin-top:10px;">
+	</style>
+	
+	<div class="div-top">
+				<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
+				<div style="float:right; margin-top:10px;">
+        			<p:clock pattern="HH:mm:ss"/>
+				</div>
+	
 	</div>
 	
 <h:form>  
@@ -55,36 +75,41 @@
         </p:submenu>
  
         <p:submenu label="PRODUTOS" icon="pi pi-tags">
-             <p:menuitem value="Cadastrar produto"  url="vendas.xhtml"/>
- 			<p:separator />
-            <p:menuitem value="Consultar produtos"/>
+             <p:menuitem value="Cadastrar produto"  url="cadastroProdutos.xhtml"/>
         </p:submenu>
  
         <p:submenu label="VENDAS" icon="pi pi-shopping-cart">
           <p:menuitem value="Cadastrar venda"  url="vendas.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Consultar vendas"/>
+            <p:menuitem value="Consultar vendas" url="consultaVendas.xhtml"/>
         </p:submenu>
  
         <p:submenu label="ARQUIVOS" icon="pi pi-folder-open">
               <p:menuitem value="Upload" url="upload.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Download"/>
             <p:menuitem value="Arquivos" url="arquivos.xhtml"/>
         </p:submenu>
  
        
- 
+ 		 <p:submenu label="SERVIÇOS" icon="pi pi-folder-open">
+              <p:menuitem value="Cadastrar serviços" url="cadastroServicos.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar servicos" url="consultaServicos.xhtml"/>
+        </p:submenu>
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton type="button" value="Logout" style="background-color:#6ab125;" icon="pi pi-home" />
+           
+ 			<p:commandButton id="basic" icon ="pi pi-user"  type="button" style="background-color:#f8f9fa; color: black; border:0px;"/>			
+ 			<p:overlayPanel for="basic" style="width:350px">
+		     <p:commandButton value="Sair" actionListener="#{user.Sair}"  style="width:100%;border-color:white; "/>
+        </p:overlayPanel>	     
         </f:facet>
     </p:menubar>
 </h:form>
 	
-
+		<p:growl id="msgGlobal" life="5000" />
+	
     
-          		<p:card style="float:left; width:50%">
+          		<p:card>
      
              
 					             	
@@ -96,9 +121,18 @@
 								                        scrollHeight="500">
 													<f:facet name="header">
 														<h:outputText value="EVENTOS MARCADOS (SAMIAVET)"/>
-								                	  	<br/><br/><p:inputText  placeholder="Digite o nome do animal"/><p:commandButton  style="background-color:#6ab125" icon="pi pi-search" value="Buscar"/>
+								                	  	<br/><br/><p:autoComplete  placeholder="Digite o nome do animal" completeMethod="#{scheduleJava8View.completarNomeAnimal}" value="#{scheduleJava8View.pesquisarNome}"/><p:commandButton style="margin-left:5px;" icon="pi pi-search" value="Buscar" update=":formAgendamentos" actionListener="#{scheduleJava8View.pesquisarAgendamento}"/><p:commandButton style="margin-left:5px;" actionListener="#{scheduleJava8View.resetar}" update=":formAgendamentos" icon="pi pi-undo"/>
 									
 													</f:facet>
+								
+									<p:card style="float:left; margin-top:10px;">
+								
+										<f:facet name="title">
+										
+											 <h4 style="font-weight: bold; margin-left: 10px;"> #{item.nomeAnimal} - #{item.atendimento}</h4>
+											
+										
+										</f:facet>
 								
 								        <p:panelGrid id="eventDetails" columns="2" columnClasses="label,value" style="width:300px; margin-left:10px; margin-top:20px;">
 								        	
@@ -132,31 +166,30 @@
 								            
 								            
 								           
-								             <p:commandButton  value="ENCERRAR"  onclick="PF('dialogExcluir').show()" update="formExcluir" style="margin-left:10px; background-color:#6ab125">
+								             <p:commandButton  value="ENCERRAR" icon="pi pi-trash"  onclick="PF('dialogExcluir').show()" update="formExcluir" style="margin-left:10px;">
 								            	 <f:setPropertyActionListener target="#{scheduleJava8View.agendamento}" value="#{item}"/>
 								            </p:commandButton>
-								            <p:commandButton id="addButton" value="EDITAR" onclick="PF('carDialog').show()" update=":formEditar" style="margin-left:5px; background-color:#6ab125">
+								            <p:commandButton id="addButton" value="EDITAR" icon="pi pi-pencil"  onclick="PF('carDialog').show()" update=":formEditar" style="margin-left:5px;" >
 								            
 								            	<f:setPropertyActionListener target="#{scheduleJava8View.agendamento}" value="#{item}"/>
 								            </p:commandButton>
 								            
 								   </p:panelGrid>
-									<p:separator/>
-								
+								</p:card>
 								
 								</p:dataScroller>
 						
 				</h:form>
              	</p:card>
              
-     		<p:card style="float:left; width:50%">
+     		<p:card style="maring-top:10px;">
 				<h:form id="formAgenda">
 				    <p:growl id="messages" showDetail="true" />
 				      
 				    <h:panelGrid columnClasses="value">
 				    
 				    
-				        <p:schedule id="schedule" value="#{scheduleJava8View.eventModel}" widgetVar="myschedule"  resizable="false" draggable="false" locale="pt" style="width:50em; height:50em;" >
+				        <p:schedule id="schedule" value="#{scheduleJava8View.eventModel}" widgetVar="myschedule"  resizable="false" draggable="false" locale="pt" style="width:53rem;" >
 				 
 				            <p:ajax event="dateSelect" listener="#{scheduleJava8View.onDateSelect}" update=":formCadastro:eventDetails" oncomplete="PF('eventDialog').show();" />
 				            <p:ajax event="eventSelect" listener="#{scheduleJava8View.onEventSelect}" update=":formCadastro:eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -173,7 +206,7 @@
     </p:card>
   <h:form id="formCadastro">
     
-    <p:dialog widgetVar="eventDialog" header="DETALHES:" showEffect="clip" hideEffect="clip">
+    <p:dialog widgetVar="eventDialog" header="DETALHES:" showEffect="clip" hideEffect="clip" height="500" modal="true" maximizable="true" minimizable="true">
        <p:panel header="AGENDAMENTO">
         <h:panelGrid id="eventDetails" columns="2">
             <p:outputLabel for="title" value="Título:" />
@@ -207,8 +240,8 @@
             
              </h:panelGrid>
              <br/>
-            <p:commandButton type="reset" value="CANCELAR" onclick="PF('eventDialog').hide();" style="background-color:#6ab125"/>
-            <p:commandButton id="addButton" value="SALVAR" style="background-color:#6ab125" actionListener="#{scheduleJava8View.cadastrar}" update=":formCadastro :formAgenda " oncomplete="resetar();"/>
+            <p:commandButton type="reset" value="CANCELAR" onclick="PF('eventDialog').hide();" />
+            <p:commandButton id="addButton" value="SALVAR" style="margin-left:5px;" actionListener="#{scheduleJava8View.cadastrar}" update=":formCadastro :formAgenda " oncomplete="resetar();"/>
    
     </p:panel>
     </p:dialog>
@@ -263,8 +296,8 @@
             
              </h:panelGrid>
              <br/>
-            <p:commandButton type="reset" value="CANCELAR" onclick="PF('carDialog').hide()" style="background-color:#6ab125"/>
-            <p:commandButton id="addButton" value="SALVAR" style="background-color:#6ab125" actionListener="#{scheduleJava8View.editar}"  update=":formAgendamentos :formCadastro :formAgenda " oncomplete="resetar();"/>
+            <p:commandButton type="reset" value="CANCELAR" onclick="PF('carDialog').hide()" />
+            <p:commandButton id="addButton" value="SALVAR" style="margin-left:5px;" actionListener="#{scheduleJava8View.editar}"  update=":formAgendamentos :formCadastro :formAgenda " oncomplete="resetar();"/>
             
    
     </p:panel>
@@ -285,8 +318,8 @@
            
            <br/>
            <br/>
-           <p:commandButton value="SIM" actionListener="#{scheduleJava8View.deletar}" style="background-color:#6ab125" update=":formAgendamentos" oncomplete="resetar();"/>
-           <p:commandButton value="NÃO" onclick="PF('dialogExcluir').hide()" style="background-color:#6ab125"/> 
+           <p:commandButton value="SIM" actionListener="#{scheduleJava8View.deletar}"  update=":formAgendamentos" oncomplete="resetar();"/>
+           <p:commandButton value="NÃO" onclick="PF('dialogExcluir').hide()" style="margin-left:5px;"/> 
    
     
     

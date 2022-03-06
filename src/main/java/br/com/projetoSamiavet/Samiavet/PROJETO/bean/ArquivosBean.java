@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
@@ -25,6 +26,7 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosImagens;
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosRX;
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosSV;
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.ArquivosUS;
+import br.com.projetoSamiavet.Samiavet.PROJETO.domain.FichaClinica;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.ArquivoGeralService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.ArquivosImagensService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.CTService;
@@ -33,6 +35,7 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.service.FUService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.RXService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.SVService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.USService;
+import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 
 @Named(value="arquivosBean")
 @ViewScoped
@@ -113,6 +116,36 @@ public class ArquivosBean {
 	@Autowired
 	private ArquivosImagensService imagensService;
 	
+	
+	private String nomeArquivoES;
+	
+	private String nomeArquivoSV;
+
+	private String nomeArquivoUS;
+
+	private String nomeArquivoRX;
+
+	private String nomeArquivoCT;
+
+	private String nomeArquivoFU;
+	
+	private String nomeImagem;
+
+	
+	private List<ArquivosES> listaESView;
+	
+	private List<ArquivosSV> listaSVView;
+	
+	private List<ArquivosUS> listaUSView;
+	
+	private List<ArquivosFU> listaFUView;
+	
+	private List<ArquivosRX> listaRXView;
+	
+	private List<ArquivosCT> listaCTView;
+	
+	private List<ArquivosImagens> listaArquivoImagensView;
+
 	public ArquivosBean() {
 		this.arquivosGeral = new ArquivosGeral();
 		this.arquivosCT = new ArquivosCT();
@@ -456,6 +489,148 @@ public class ArquivosBean {
 		this.imagensService = imagensService;
 	}
 
+	
+
+	public String getNomeArquivoES() {
+		return nomeArquivoES;
+	}
+
+
+	public void setNomeArquivoES(String nomeArquivoES) {
+		this.nomeArquivoES = nomeArquivoES;
+	}
+
+
+	public String getNomeArquivoSV() {
+		return nomeArquivoSV;
+	}
+
+
+	public void setNomeArquivoSV(String nomeArquivoSV) {
+		this.nomeArquivoSV = nomeArquivoSV;
+	}
+
+
+	public String getNomeArquivoUS() {
+		return nomeArquivoUS;
+	}
+
+
+	public void setNomeArquivoUS(String nomeArquivoUS) {
+		this.nomeArquivoUS = nomeArquivoUS;
+	}
+
+
+	public String getNomeArquivoRX() {
+		return nomeArquivoRX;
+	}
+
+
+	public void setNomeArquivoRX(String nomeArquivoRX) {
+		this.nomeArquivoRX = nomeArquivoRX;
+	}
+
+
+	public String getNomeArquivoCT() {
+		return nomeArquivoCT;
+	}
+
+
+	public void setNomeArquivoCT(String nomeArquivoCT) {
+		this.nomeArquivoCT = nomeArquivoCT;
+	}
+
+
+	public String getNomeArquivoFU() {
+		return nomeArquivoFU;
+	}
+
+
+	public void setNomeArquivoFU(String nomeArquivoFU) {
+		this.nomeArquivoFU = nomeArquivoFU;
+	}
+
+
+	public String getNomeImagem() {
+		return nomeImagem;
+	}
+
+
+	public void setNomeImagem(String nomeImagem) {
+		this.nomeImagem = nomeImagem;
+	}
+
+
+	
+	public List<ArquivosES> getListaESView() {
+		return listaESView;
+	}
+
+
+	public void setListaESView(List<ArquivosES> listaESView) {
+		this.listaESView = listaESView;
+	}
+
+
+	public List<ArquivosSV> getListaSVView() {
+		return listaSVView;
+	}
+
+
+	public void setListaSVView(List<ArquivosSV> listaSVView) {
+		this.listaSVView = listaSVView;
+	}
+
+
+	public List<ArquivosUS> getListaUSView() {
+		return listaUSView;
+	}
+
+
+	public void setListaUSView(List<ArquivosUS> listaUSView) {
+		this.listaUSView = listaUSView;
+	}
+
+
+	public List<ArquivosFU> getListaFUView() {
+		return listaFUView;
+	}
+
+
+	public void setListaFUView(List<ArquivosFU> listaFUView) {
+		this.listaFUView = listaFUView;
+	}
+
+
+	public List<ArquivosRX> getListaRXView() {
+		return listaRXView;
+	}
+
+
+	public void setListaRXView(List<ArquivosRX> listaRXView) {
+		this.listaRXView = listaRXView;
+	}
+
+
+	public List<ArquivosCT> getListaCTView() {
+		return listaCTView;
+	}
+
+
+	public void setListaCTView(List<ArquivosCT> listaCTView) {
+		this.listaCTView = listaCTView;
+	}
+
+
+	public List<ArquivosImagens> getListaArquivoImagensView() {
+		return listaArquivoImagensView;
+	}
+
+
+	public void setListaArquivoImagensView(List<ArquivosImagens> listaArquivoImagensView) {
+		this.listaArquivoImagensView = listaArquivoImagensView;
+	}
+
 
 	@PostConstruct
 	public void carregar() {
@@ -471,7 +646,13 @@ public class ArquivosBean {
 		
 		
 	
-		
+		this.listaCTView = new ArrayList<ArquivosCT>(this.ctService.listar());
+		this.listaESView = new ArrayList<ArquivosES>(this.esService.listar());
+		this.listaFUView = new ArrayList<ArquivosFU>(this.fuService.listar());
+		this.listaRXView = new ArrayList<ArquivosRX>(this.rxService.listar());
+		this.listaSVView = new ArrayList<ArquivosSV>(this.svService.listar());
+		this.listaUSView = new ArrayList<ArquivosUS>(this.usService.listar());
+		this.listaArquivoImagensView = new ArrayList<ArquivosImagens>(this.imagensService.listar());
 
 		
 	}
@@ -531,4 +712,292 @@ public class ArquivosBean {
 	                .build();
 	}
 	
+	
+	public void excluirArquivoES() {
+			
+			try {
+				this.esService.deletar(this.arquivosES.getId());
+				carregar();
+				JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+			}catch(Exception erro) {
+				JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+			}
+			
+		}
+	
+	public void excluirArquivoCT() {
+		
+		try {
+			this.ctService.deletar(this.arquivosCT.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	public void excluirArquivoSV() {
+		
+		try {
+			this.svService.deletar(this.arquivosSV.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	public void excluirArquivoFU() {
+		
+		try {
+			this.fuService.deletar(this.arquivosFU.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	public void excluirArquivoUS() {
+		
+		try {
+			this.usService.deletar(this.arquivosUS.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	public void excluirArquivoRX() {
+		
+		try {
+			this.rxService.deletar(this.arquivosRX.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	public void excluirArquivosGeral() {
+		
+		try {
+			this.arquivoService.deletar(this.arquivosGeral.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+	
+	public void excluirImagens() {
+		
+		try {
+			this.imagensService.deletar(this.arquivoImagem.getId());
+			carregar();
+			JsfUtil.adicionarMensagemDeSucesso("Arquivo excluído com sucesso. ", null);
+	
+		}catch(Exception erro) {
+			JsfUtil.adicionarMensagemDeErro("Ocorreu um erro inesperado.", null);
+	
+		}
+		
+		
+		
+	}
+
+	
+	public List<String> listaNomesArquivosES(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosES> nomes = this.esService.listar();
+	    for (ArquivosES nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	public List<String> listaNomesArquivosSV(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosSV> nomes = this.svService.listar();
+	    for (ArquivosSV nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	public List<String> listaNomesArquivosUS(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosUS> nomes = this.usService.listar();
+	    for (ArquivosUS nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	
+	public List<String> listaNomesArquivosRX(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosRX> nomes = this.rxService.listar();
+	    for (ArquivosRX nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	public List<String> listaNomesArquivosCT(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosCT> nomes = this.ctService.listar();
+	    for (ArquivosCT nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	public List<String> listaNomesArquivosFU(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosFU> nomes = this.fuService.listar();
+	    for (ArquivosFU nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	public List<String> listaNomesArquivosGeral(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosGeral> nomes = this.arquivoService.listar();
+	    for (ArquivosGeral nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeArquivo());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	public List<String> listaNomesImagens(String query) {
+	    String queryLowerCase = query.toLowerCase();
+	    List<String> listaNomes = new ArrayList<>();
+	    List<ArquivosImagens> nomes = this.imagensService.listar();
+	    for (ArquivosImagens nomesArquivos : nomes) {
+	    	listaNomes.add(nomesArquivos.getNomeImagem());
+	    }
+	
+	    return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+	}
+	
+	
+	
+	public void pesquisarES() {
+		
+		this.listaESView = new ArrayList<ArquivosES>(esService.buscarPorNome(nomeArquivoES));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoES, null);
+	}
+	
+	public void pesquisarSV() {
+		
+		this.listaSVView = new ArrayList<ArquivosSV>(svService.buscarPorNome(nomeArquivoSV));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoSV, null);
+	}
+	
+	public void pesquisarCT() {
+		
+		this.listaCTView = new ArrayList<ArquivosCT>(ctService.buscarPorNome(nomeArquivoCT));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoCT, null);
+	}
+	
+	public void pesquisarFU() {
+		
+		this.listaFUView = new ArrayList<ArquivosFU>(fuService.buscarPorNome(nomeArquivoFU));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoFU, null);
+	}
+	
+	public void pesquisarRX() {
+		
+		this.listaRXView = new ArrayList<ArquivosRX>(rxService.buscarPorNome(nomeArquivoRX));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoRX, null);
+	}
+	
+	public void pesquisarUS() {
+		
+		this.listaUSView = new ArrayList<ArquivosUS>(usService.buscarPorNome(nomeArquivoUS));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeArquivoUS, null);
+	}
+	
+
+	public void pesquisarImagens() {
+		
+		this.listaArquivoImagensView = new ArrayList<ArquivosImagens>(this.imagensService.buscarPorNome(nomeImagem));
+		JsfUtil.adicionarMensagemDeSucesso("Resultados encontrados para: " + this.nomeImagem, null);
+	}
+	
+	public void resetarArquivosES() {
+		this.listaESView = new ArrayList<ArquivosES>(esService.listar());
+
+	}
+	
+	public void resetarArquivosSV() {
+		this.listaSVView = new ArrayList<ArquivosSV>(svService.listar());
+
+	}
+	
+	public void resetarArquivosFU() {
+		this.listaFUView = new ArrayList<ArquivosFU>(fuService.listar());
+
+	}
+	public void resetarArquivosRX() {
+		this.listaRXView = new ArrayList<ArquivosRX>(rxService.listar());
+
+	}
+	
+	public void resetarArquivosUS() {
+		this.listaUSView = new ArrayList<ArquivosUS>(usService.listar());
+
+	}
+	public void resetarArquivosCT() {
+		this.listaCTView = new ArrayList<ArquivosCT>(ctService.listar());
+
+	}
+	
+	public void resetarArquivosImagens() {
+		this.listaArquivoImagensView = new ArrayList<ArquivosImagens>(imagensService.listar());
+
+	}
 }

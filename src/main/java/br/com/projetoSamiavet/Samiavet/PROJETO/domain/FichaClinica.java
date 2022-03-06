@@ -1,7 +1,10 @@
 package br.com.projetoSamiavet.Samiavet.PROJETO.domain;
 
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,7 +12,8 @@ import javax.persistence.Table;
 @Table(name="ficha_clinica")
 public class FichaClinica {
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String nome_proprietario; 
 	private String telefone;
 	private String email;
@@ -33,7 +37,7 @@ public class FichaClinica {
 	
 	
 	
-	public FichaClinica( Integer id, String nome_proprietario, String telefone, String email, String endereco,
+	public FichaClinica( Long id, String nome_proprietario, String telefone, String email, String endereco,
 			String cpf, String nome_animal, String especie_animal, String raca_animal, String sexo_animal,
 			String historico_animal, Double fc_animal, Double fr_animal, Double p_animal, Double t_animal,
 			String data_nascimento_animal, String pelugem_animal, String peso_animal, String data_registro_animal) {
@@ -63,12 +67,15 @@ public class FichaClinica {
 	public FichaClinica() {
 		
 	}
-	public Integer getId() {
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome_proprietario() {
 		return nome_proprietario;
 	}

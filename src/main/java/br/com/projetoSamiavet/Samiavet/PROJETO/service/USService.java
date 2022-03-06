@@ -44,5 +44,9 @@ public class USService {
 		return nomeArquivo;
 	}
 	
+	public List<ArquivosUS> buscarPorNome(String nome){
+		return this.usRepository.findByNomeArquivo(nome);
+	}
+	
 	
 }

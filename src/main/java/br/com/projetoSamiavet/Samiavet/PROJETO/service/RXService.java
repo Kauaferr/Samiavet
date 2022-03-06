@@ -45,4 +45,8 @@ public class RXService {
 		return nomeArquivo;
 	}
 	
+	public List<ArquivosRX> buscarPorNome(String nome){
+		return this.rxRepository.findByNomeArquivo(nome);
+	}
+	
 }

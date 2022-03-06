@@ -19,6 +19,12 @@
 
 	<style>
 
+ 		button.ui-button{
+ 			background-color:#6ab125;
+ 		}
+ 		button.ui-button:hover{
+ 			background-color:#6ab125;
+ 		}
 		.tentando{
 		    border-size:20px;
 		
@@ -233,13 +239,33 @@
     	    font-size: 11px !important;
     	    float:left;
 		}
+	
+		button.ui-button{
+ 			background-color:#6ab125;
+ 			border:0px;
+ 		}
+ 		button.ui-button:hover{
+ 			background-color:#78b83b;
+ 		}
+		.div-top{
+		 
+		     width: 100% !important;
+		     background: url(../resources/imagens/bg.jpg) repeat-x !important;
+			 padding: 15px 0 0 0 !important;
+			 background-color: black;
+		}
+		.ui-clock{
+    		background-color: black;
+		}
+	
 	</style>
 	
+	<div class="div-top">
+				<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
+				<div style="float:right; margin-top:10px;">
+        			<p:clock pattern="HH:mm:ss"/>
+				</div>
 	
-		<p:growl id="msgGlobal" life="5000" showDetail="true"/>
-	<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
-	
-	<div style="float:right; margin-top:10px;">
 	</div>
 	
 <h:form>  
@@ -254,45 +280,44 @@
         </p:submenu>
  
         <p:submenu label="PRODUTOS" icon="pi pi-tags">
-             <p:menuitem value="Cadastrar produto"  url="vendas.xhtml"/>
- 			<p:separator />
-            <p:menuitem value="Consultar produtos"/>
+             <p:menuitem value="Cadastrar produto"  url="cadastroProdutos.xhtml"/>
         </p:submenu>
  
         <p:submenu label="VENDAS" icon="pi pi-shopping-cart">
           <p:menuitem value="Cadastrar venda"  url="vendas.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Consultar vendas"/>
+            <p:menuitem value="Consultar vendas" url="consultaVendas.xhtml"/>
         </p:submenu>
  
         <p:submenu label="ARQUIVOS" icon="pi pi-folder-open">
               <p:menuitem value="Upload" url="upload.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Download"/>
             <p:menuitem value="Arquivos" url="arquivos.xhtml"/>
         </p:submenu>
  
        
- 
+ 		 <p:submenu label="SERVIÇOS" icon="pi pi-folder-open">
+              <p:menuitem value="Cadastrar serviços" url="cadastroServicos.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar servicos" url="consultaServicos.xhtml"/>
+        </p:submenu>
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton type="button" value="Logout" style="background-color:#6ab125;" icon="pi pi-home" />
+           
+ 			<p:commandButton id="basic" icon ="pi pi-user"  type="button" style="background-color:#f8f9fa; color: black; border:0px;"/>			
+ 			<p:overlayPanel for="basic" style="width:350px">
+		     <p:commandButton value="Sair" actionListener="#{user.Sair}"  style="width:100%;border-color:white; "/>
+        </p:overlayPanel>	     
         </f:facet>
     </p:menubar>
 </h:form>
-
-   	<div class="div" >
-   
-   		<p:separator styleClass="separator"/>
-	   	<p:outputPanel styleClass="tituloTabela">
-	              <p class="titulo">ANIMAIS CADASTRADOS</p>
-	     </p:outputPanel>
-   		<p:separator styleClass="separator"/>
-
-
+	
+		<p:growl id="msgGlobal" life="5000" />
+	
+   		
+                
 	    <fieldset class="fieldsetBusca">
 		  <h:form id="pesquisa">
-	    	<p:autoComplete value="#{MBFichaClinica.nomeBusca}" id="input" placeholder="Buscar animal.." styleClass="input" completeMethod="#{MBFichaClinica.completarCodigoBarras}" scrollHeight="250"/><p:commandButton actionListener="#{MBFichaClinica.buscarNome}"  icon="ui-icon-search" update=":formCadastroFichas:tabelaFichas :pesquisa :msgGlobal" styleClass="botaoPesquisar"/><p:commandButton  icon="ui-icon-refresh" actionListener="#{MBFichaClinica.listarTodos}"  update=":formCadastroFichas:tabelaFichas :pesquisa :msgGlobal" styleClass="botaoResetar"/>
+	    	<p:autoComplete value="#{MBFichaClinica.nomeBusca}" id="input" placeholder="Buscar animal.." styleClass="input" completeMethod="#{MBFichaClinica.completarCodigoBarras}" scrollHeight="250"/><p:commandButton actionListener="#{MBFichaClinica.buscarNome}" style="margin-left:5px;" icon="pi pi-search" update=":formCadastroFichas:tabelaFichas :pesquisa :msgGlobal" styleClass="botaoPesquisar"/><p:commandButton  icon="pi pi-undo" style="margin-left:5px;" actionListener="#{MBFichaClinica.listarTodos}"  update=":formCadastroFichas:tabelaFichas :pesquisa :msgGlobal" styleClass="botaoResetar"/>
 	    	</h:form>
 	    </fieldset>
 	    
@@ -301,6 +326,13 @@
 		    			 paginatorTemplate="{CurrentPageReport} {FirstPageLink}  {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
 		                 currentPageReportTemplate="{startRecord}-{endRecord}"
 		                 rowsPerPageTemplate="10,20,30,40,50" rowKey="#{item.id}">
+		        
+		        
+		        	<f:facet name="header">
+		        	
+		        		<center><h3>ANIMAIS CADASTRADOS</h3></center>
+		        		
+		        	</f:facet>
 		        
 			        <p:column style="width:16px">
 			            <p:rowToggler />
@@ -381,15 +413,15 @@
 			           
 			       </p:panelGrid>
 			       	<p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
-			    	    <p:commandButton icon="ui-icon-pencil"   styleClass="botaoEditar"  value="EDITAR" update=":formEditar" onclick="PF('dialogEditar').show()"> <f:setPropertyActionListener target="#{MBFichaClinica.fichaClinica}" value="#{item}"/></p:commandButton>
+			    	    <p:commandButton icon="pi pi-pencil"   styleClass="botaoEditar"  value="EDITAR" update=":formEditar" onclick="PF('dialogEditar').show()"> <f:setPropertyActionListener target="#{MBFichaClinica.fichaClinica}" value="#{item}"/></p:commandButton>
 			        	
-			        	<p:commandButton icon="ui-icon-trash"   styleClass="botaoExcluir" value="EXCLUIR" update=":formExcluir" onclick="PF('dialogExcluir').show()"> <f:setPropertyActionListener target="#{MBFichaClinica.fichaClinica}"  value="#{item}"/></p:commandButton> 
+			        	<p:commandButton icon="pi pi-trash"   styleClass="botaoExcluir" value="EXCLUIR" update=":formExcluir" onclick="PF('dialogExcluir').show()"> <f:setPropertyActionListener target="#{MBFichaClinica.fichaClinica}"  value="#{item}"/></p:commandButton> 
 					</p:panelGrid>
 				</p:rowExpansion>
 		    </p:dataTable>
 		</h:form>
-    </div>
-    <p:dialog header="EXCLUIR CADASTRO" widgetVar="dialogExcluir" showEffect="blind" hideEffect="explode"  height="50" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogExcluir">
+	
+    <p:dialog header="EXCLUIR CADASTRO" widgetVar="dialogExcluir" showEffect="blind" hideEffect="explode"  height="60" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogExcluir">
 
 
 
@@ -399,8 +431,8 @@
 	            <h:outputText value="#{MBFichaClinica.fichaClinica.id}" styleClass="titulo"/>
 	            
 	            
-	            <p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{MBFichaClinica.excluir}" update=":formCadastroFichas:tabelaFichas :msgGlobal" onclick="PF('dialogExcluir').hide()" />
-	            <p:commandButton value="CANCELAR" onclick="PF('dialogExcluir').hide()"/>
+	            <br/> <br/><p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{MBFichaClinica.excluir}"  update=":formCadastroFichas:tabelaFichas :msgGlobal" onclick="PF('dialogExcluir').hide()" />
+	            <p:commandButton value="CANCELAR" onclick="PF('dialogExcluir').hide()" style="margin-left:5px;"/>
             
             
             </h:form>
@@ -527,11 +559,12 @@
 							    <br/>
         						<p:commandButton value="SALVAR"  actionListener = "#{MBFichaClinica.editar}" update=":formCadastroFichas:tabelaFichas :msgGlobal" onclick="PF('dialogEditar').hide()" />
         
-        						<p:commandButton value="CANCELAR" onclick="PF('dialogEditar').hide()"  ></p:commandButton>
+        						<p:commandButton value="CANCELAR" onclick="PF('dialogEditar').hide()"  style="margin-left:5px;"></p:commandButton>
    
     	
     	
     			</h:form>
+    			
     </p:dialog>
   
 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />

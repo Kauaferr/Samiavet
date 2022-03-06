@@ -71,9 +71,19 @@ public class FotosResource {
 	@RequestMapping(value= "/upload", method = RequestMethod.POST)
 	public ModelAndView upload(@RequestParam(name="upload") MultipartFile arquivo) throws IOException {
 		
+		String nomeArquivo = arquivo.getOriginalFilename();
+		
+		String[] characters = nomeArquivo.split("");
+		
+		int ultimaPosicao = (characters.length - 5);
+		
+		int penultimaPosicao = (characters.length - 6);
+
 		
 		
-		if(arquivo.getOriginalFilename().contains("ES")&&arquivo.getOriginalFilename().contains(".pdf")) {
+		try {
+		
+		if(characters[penultimaPosicao].equals("E")&&characters[ultimaPosicao].equals("S")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			
 			String nomeValida = this.esService.listarPorNome(arquivo.getOriginalFilename());
 			
@@ -93,7 +103,7 @@ public class FotosResource {
 			}
 			
 			
-		}else if(arquivo.getOriginalFilename().contains("US")&&arquivo.getOriginalFilename().contains(".pdf")) {
+		}else if(characters[penultimaPosicao].equals("U")&&characters[ultimaPosicao].equals("S")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			
 			String nomeValida = this.usService.listarPorNome(arquivo.getOriginalFilename());
 			
@@ -113,7 +123,7 @@ public class FotosResource {
 			}
 			
 			
-		}else if(arquivo.getOriginalFilename().contains("RX")&&arquivo.getOriginalFilename().contains(".pdf")) {
+		}else if(characters[penultimaPosicao].equals("R")&&characters[ultimaPosicao].equals("X")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			
 			String nomeValida = this.rxService.listarPorNome(arquivo.getOriginalFilename());
 
@@ -150,7 +160,7 @@ public class FotosResource {
 				return new ModelAndView("erroUpload2.xhtml");
 
 			}
-			}else if(arquivo.getOriginalFilename().contains("FU")&&arquivo.getOriginalFilename().contains(".pdf")) {
+			}else if(characters[penultimaPosicao].equals("F")&&characters[ultimaPosicao].equals("U")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			String nomeValida = this.fuService.listarPorNome(arquivo.getOriginalFilename());
 
 			if(nomeValida == null) {
@@ -167,7 +177,7 @@ public class FotosResource {
 				return new ModelAndView("erroUpload2.xhtml");
 
 			}
-		}else if(arquivo.getOriginalFilename().contains("SV")&&arquivo.getOriginalFilename().contains(".pdf")) {
+		}else if(characters[penultimaPosicao].equals("S")&&characters[ultimaPosicao].equals("V")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			
 			
 			String nomeValida = this.svService.listarPorNome(arquivo.getOriginalFilename());
@@ -185,7 +195,7 @@ public class FotosResource {
 				return new ModelAndView("erroUpload2.xhtml");
 
 			}
-		}else if(arquivo.getOriginalFilename().contains("CT")&&arquivo.getOriginalFilename().contains(".pdf")) {
+		}else if(characters[penultimaPosicao].equals("C")&&characters[ultimaPosicao].equals("T")&&arquivo.getOriginalFilename().contains(".pdf")) {
 			String nomeValida = this.ctService.listarPorNome(arquivo.getOriginalFilename());
 
 			if(nomeValida == null) {
@@ -222,6 +232,11 @@ public class FotosResource {
 
 			}
 		}
+		}catch(Exception erro) {
+			return new ModelAndView("erroUpload.xhtml");
+
+		}
+	
 		
 		return new ModelAndView("index.html");
 	}

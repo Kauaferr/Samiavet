@@ -20,27 +20,42 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 @SessionScoped
 public class LoginController {
 
-	private Usuario logar;
+	private Usuario user;
 	
 	@Autowired
 	private UsuarioService userService;
 	
 	
+	
+	
+	
+	public UsuarioService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UsuarioService userService) {
+		this.userService = userService;
+	}
+
 	public Usuario getLogar() {
-		return logar;
+		return user;
 	}
 
 	public void setLogar(Usuario logar) {
-		this.logar = logar;
+		this.user = logar;
 	}
 
 	public LoginController() {
 		
-		this.logar = new Usuario();
+		this.user = new Usuario();
+		
+		
 	}
 	
 	@PostConstruct
 	public void carregar() {
+		
+	
 		
 	}
 	
@@ -49,20 +64,21 @@ public class LoginController {
 		
 		
 		
-		String valorLogin = this.userService.buscaPorLogin(this.logar.getLogin());
+		String valorLogin = this.userService.buscaPorLogin(this.user.getLogin());
 		
-		String valorSenha = this.userService.buscaPorSenha(this.logar.getSenha());
+		String valorSenha = this.userService.buscaPorSenha(this.user.getSenha());
 		
 		
 		if(valorLogin == null || valorSenha == null) {
         	JsfUtil.adicionarMensagemDeErro("Usuario e/ou senha incorreta", null);
 
-		}else if(this.logar.getSenha().equals(valorSenha)&&this.logar.getLogin().equals(valorLogin)) {
+		}else if(this.user.getSenha().equals(valorSenha)&&this.user.getLogin().equals(valorLogin)) {
 			
 			HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			session.setAttribute("usuario", this.logar);
-			 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		        ec.redirect(ec.getRequestContextPath() + "/pages/cadastro.xhtml");	
+			session.setAttribute("usuario", this.user);
+			
+		   ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		   ec.redirect(ec.getRequestContextPath() + "/pages/cadastro.xhtml");	
 		}
 		
 		
@@ -77,4 +93,7 @@ public class LoginController {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/seguranca/login.xhtml");	
 	}
+	
+	
+	
 }

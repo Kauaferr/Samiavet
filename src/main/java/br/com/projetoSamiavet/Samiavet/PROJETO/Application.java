@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.appAuth;
 import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.loginAuth;
@@ -19,6 +21,9 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.filtros.mudarSenhaAuth;
 public class Application extends SpringBootServletInitializer{
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        
+        
+        
     }
  
     @Bean
@@ -56,4 +61,6 @@ public class Application extends SpringBootServletInitializer{
             
         return registrationBean;    
     }
+ 
+    
 }

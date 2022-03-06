@@ -17,9 +17,10 @@
 
 	<h:body>
 	
-		<h:inputText value="hello there"/>
 		<p:growl id="msgGlobal" life="5000" showDetail="true"/>
 		<p:layout fullPage="true">
+		
+		
         	<p:layoutUnit position="north">
         		<ui:insert name="menu"/>        	
         	</p:layoutUnit>
@@ -28,9 +29,9 @@
     			<ui:insert name="conteudo"/>
     		</p:layoutUnit>
     		
-    		   <p:layoutUnit position="west">
-            <ui:insert name="conteudo-oeste"/>
-        </p:layoutUnit>
+    		<p:layoutUnit position="west">
+            	<ui:insert name="conteudo-oeste"/>
+       		</p:layoutUnit>
     	</p:layout>
 	</h:body>
 </html>

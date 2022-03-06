@@ -20,7 +20,7 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.service.ResetarSenhaService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.UsuarioService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 
-@Named(value="recuperarSenhaBean")
+@Named(value="mudarSenhaBean")
 @SessionScoped
 public class RecuperarSenhaBean {
 
@@ -35,12 +35,18 @@ public class RecuperarSenhaBean {
 	
 	@Autowired
 	private UsuarioService userService;
+	
 	private String novaSenha;
 	
 	private String confirmarSenha;
 	
 	private String senhaAtual;
 	
+
+	private String novaSenhaMudanca;
+	
+	
+	private String confirmarSenhaMudanca;
 	
 	
 	public ResetarSenha getRecuperarSenha() {
@@ -114,10 +120,40 @@ public class RecuperarSenhaBean {
 
 
 
+	public String getNovaSenhaMudanca() {
+		return novaSenhaMudanca;
+	}
+
+
+
+
+	public void setNovaSenhaMudanca(String novaSenhaMudanca) {
+		this.novaSenhaMudanca = novaSenhaMudanca;
+	}
+
+
+
+
+	public String getConfirmarSenhaMudanca() {
+		return confirmarSenhaMudanca;
+	}
+
+
+
+
+	public void setConfirmarSenhaMudanca(String confirmarSenhaMudanca) {
+		this.confirmarSenhaMudanca = confirmarSenhaMudanca;
+	}
+
+
+
+
 	public RecuperarSenhaBean() {
 		
 		this.recuperarSenha = new ResetarSenha();
 	}
+	
+	
 	
 	public void enviarEmailRecuperacao() {
 		
@@ -170,6 +206,39 @@ public class RecuperarSenhaBean {
 		
 		
 	}
+	
+	
+	public void reenviarCod() {
+
+		String meuEmail = "kauafrreira23@gmail.com";
+		String minhaSenha = "kauafsk.";
+		
+		SimpleEmail email = new SimpleEmail();
+		email.setHostName("smtp.gmail.com");
+		//email.setSmtpPort(587);
+		email.setAuthenticator(new DefaultAuthenticator(meuEmail,minhaSenha));
+		email.setSSLOnConnect(true);
+		
+		
+		try {
+			
+			
+			email.setFrom(meuEmail);
+			email.setSubject("RECUPERAÇÃO DE SENHA SAMIAVET");
+			email.setMsg("CÓDIGO DE RECUPERAÇÃO DE SENHA: " + this.resetarSenhaService.retornaLista().get(0).getCodigo());
+
+			email.addTo(meuEmail);
+			
+			
+			email.send();
+			
+			JsfUtil.adicionarMensagemDeSucesso("CÓDIGO REENVIADDO COM SUCESSO!", null);
+		}catch(Exception erro) {
+			
+			erro.printStackTrace();
+		}
+	}
+	
 	
 	public void printar() {
 		System.out.println("chamou o metodo");
@@ -237,4 +306,47 @@ public class RecuperarSenhaBean {
 		}
 	}
 	
+	
+	public void AlterarSenha() {
+		
+		String senhaAtual = this.userService.buscaPorSenha(this.senhaAtual);
+		
+		
+		
+		
+		if(senhaAtual == null) {
+			JsfUtil.adicionarMensagemDeErro("A senha atual está incorreta", null);
+
+		}
+		
+		else{
+			
+			if(this.novaSenhaMudanca.equals(confirmarSenhaMudanca)) {
+				Long id = null;
+				
+				
+				for(int cont =0; cont < this.userService.retornaLista().size(); cont++) {
+					id = this.userService.retornaLista().get(cont).getId();
+				}
+				
+				Usuario user = new Usuario();
+				
+				
+				user.setId(id);
+				user.setLogin(this.userService.retornaLista().get(0).getLogin());
+				user.setSenha(this.novaSenhaMudanca);
+				
+				this.userService.cadastrar(user);
+				JsfUtil.adicionarMensagemDeSucesso("Senha alterada com sucesso!", null);
+				
+				
+				
+				
+
+			}else {
+				JsfUtil.adicionarMensagemDeErro("As senhas não coincidem", null);
+			}
+			}
+			
+	}
 }

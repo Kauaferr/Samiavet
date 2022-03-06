@@ -45,5 +45,7 @@ public class FUService {
 		
 		return nomeArquivo;
 	}
-	
+	public List<ArquivosFU> buscarPorNome(String nome){
+		return this.fuRepository.findByNomeArquivo(nome);
+	}
 }

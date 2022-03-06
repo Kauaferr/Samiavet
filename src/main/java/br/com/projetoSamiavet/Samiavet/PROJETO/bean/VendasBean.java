@@ -1,6 +1,5 @@
 package br.com.projetoSamiavet.Samiavet.PROJETO.bean;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,22 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.MultiPartEmail;
+import org.primefaces.component.export.ExcelOptions;
+import org.primefaces.component.export.PDFOptions;
+import org.primefaces.component.export.PDFOrientationType;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -47,6 +53,8 @@ public class VendasBean {
 	private List<ProdutosSelecionados> listaProdutosSelecionados;
 	private String codigoBarrasConsulta;
 	private String quantidadeEstoque;
+	
+	private Double totalVendas;
 	
     private StreamedContent file;
  
@@ -70,6 +78,10 @@ public class VendasBean {
 	
 	private Boolean renderedMedia;
 	
+   private ExcelOptions excelOpt;
+
+    private PDFOptions pdfOpt;
+
 	private String email;
 	public VendasBean() {
 		this.vendas = new Vendas();
@@ -80,6 +92,50 @@ public class VendasBean {
 		 
 		 
 	}
+
+	
+	
+
+	public ExcelOptions getExcelOpt() {
+		return excelOpt;
+	}
+
+
+
+
+	public void setExcelOpt(ExcelOptions excelOpt) {
+		this.excelOpt = excelOpt;
+	}
+
+
+
+
+	public PDFOptions getPdfOpt() {
+		return pdfOpt;
+	}
+
+
+
+
+	public void setPdfOpt(PDFOptions pdfOpt) {
+		this.pdfOpt = pdfOpt;
+	}
+
+
+
+
+	public Double getTotalVendas() {
+		return totalVendas;
+	}
+
+
+
+
+	public void setTotalVendas(Double totalVendas) {
+		this.totalVendas = totalVendas;
+	}
+
+
 
 
 	public Vendas getVendas() {
@@ -234,8 +290,39 @@ public class VendasBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@PostConstruct
+	public void carregar() {
+		this.itens = new ArrayList<Vendas>(this.vendasService.listar());
+		
+		this.totalVendas = 0.0;
+		
+		
+		
+		for(int cont =0; cont <  this.vendasService.listar().size(); cont++ ) {
+			 this.totalVendas += this.vendasService.listar().get(cont).getValor();
+			 
+		}
+		
+		customizationOptions();
+	}
+	
+	
+	 public void customizationOptions() {
+	        excelOpt = new ExcelOptions();
+	        excelOpt.setFacetFontSize("10");
+	        excelOpt.setFacetFontStyle("BOLD");
+	        excelOpt.setCellFontSize("8");
+	        excelOpt.setFontName("Verdana");
 
-
+	        pdfOpt = new PDFOptions();
+	        
+	        pdfOpt.setFacetFontStyle("BOLD");
+	        pdfOpt.setCellFontSize("12");
+	        pdfOpt.setFontName("Courier");
+	        pdfOpt.setOrientation(PDFOrientationType.LANDSCAPE);
+	    }
+	
 	public void listarProdutosSelecionados() {
 		
 		if(this.codigoBarrasConsulta.isEmpty()) {
@@ -398,11 +485,11 @@ public class VendasBean {
 		Document document = new Document();
 
 		 try {
-	            PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\kauaf\\Downloads\\tomcat-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\comprovantes\\" + this.vendas.getId_venda() + ".pdf"));
+	            PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\kaua.ferreira\\Downloads\\apache-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\comprovantes\\" + this.vendas.getId_venda() + ".pdf"));
 	            
 	            document.open();
 	            document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------"));
-	            String filename = "C:\\Users\\kauaf\\Downloads\\tomcat-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\imagens\\samiavet-copia.png";
+	            String filename = "C:\\Users\\kaua.ferreira\\Downloads\\apache-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\imagens\\samiavet-copia.png";
 	            Font fonteTexto = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12,Font.NORMAL);
 
 	            Font fonteNegrito = FontFactory.getFont(FontFactory.COURIER, 17,Font.BOLD );
@@ -453,7 +540,7 @@ public class VendasBean {
 		JsfUtil.adicionarMensagemDeSucesso("VENDA REGISTRADA COM SUCESSO", null);
 		this.produtosSelecionadosService.getProdutosSelecionadosRepository().deleteAll();
 		listarProdutosEscolhidos();
-
+		carregar();
 		}else if(validaEstoque == 1){
 
 		}else if(validaEstoque == 2){
@@ -522,8 +609,8 @@ public class VendasBean {
         }
 
         return countryList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
-    }
-	
+    
+	}
 	
 	public void enviarEmail() {
 		String meuEmail = "kauafrreira23@gmail.com";
@@ -545,7 +632,7 @@ public class VendasBean {
 			email.setMsg("Comprovante de compra realizada. DATA: " + LocalDate.now().getDayOfMonth() + "/" + LocalDate.now().getMonthValue() + "/" + LocalDate.now().getYear() + " HORA: " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute());
 			email.addTo(this.email);
 			EmailAttachment anexo = new EmailAttachment();
-			anexo.setPath("C:\\Users\\kauaf\\Downloads\\tomcat-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\comprovantes\\" + this.nomeComprovante + ".pdf");
+			anexo.setPath("C:\\Users\\kaua.ferreira\\Downloads\\apache-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\comprovantes\\" + this.nomeComprovante + ".pdf");
 			anexo.setName(this.nomeComprovante + ".pdf");
 			email.attach(anexo);
 			
@@ -570,14 +657,27 @@ public class VendasBean {
                 .build();
 	}
 	
-	public void imprimir() {
-		Desktop desktop = Desktop.getDesktop();
+
+	
+	 public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+	        Document pdf = (Document) document;
+	        pdf.open();
+	        pdf.setPageSize(PageSize.A4);
+
+	        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+	        String separator = File.separator;
+	        String logo = externalContext.getRealPath("") + separator
+	                + "resources" + separator + "showcase" + separator + "images" + separator + "primefaces-logo.png";
+
+	        pdf.add(Image.getInstance(logo));
+	    }
+
+	public void deletar() {
+		this.vendasService.deletarTudo();
 		
-		try {
-			File file = new File("C:\\Users\\kauaf\\Downloads\\tomcat-server\\webapps\\br.com.projetoSamiavet-0.0.1-SNAPSHOT\\resources\\comprovantes\\" + this.nomeComprovante + ".pdf");
-			desktop.print(file);
-		}catch(Exception erro) {
-			erro.printStackTrace();
-		}
+		JsfUtil.adicionarMensagemDeSucesso("Vendas deletadas com sucesso!!", null);
+		
+		carregar();
 	}
 }

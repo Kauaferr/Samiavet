@@ -21,6 +21,16 @@ public class ESService {
 	}
 	
 	
+	public ESRepository getEsRepository() {
+		return esRepository;
+	}
+
+
+	public void setEsRepository(ESRepository esRepository) {
+		this.esRepository = esRepository;
+	}
+
+
 	public void salvar(ArquivosES arquivosES) {
 		this.esRepository.save(arquivosES);
 	}
@@ -45,5 +55,9 @@ public class ESService {
 		}
 		
 		return nomeArquivo;
+	}
+	
+	public List<ArquivosES> buscarPorNome(String nome){
+		return this.esRepository.findByNomeArquivo(nome);
 	}
 }

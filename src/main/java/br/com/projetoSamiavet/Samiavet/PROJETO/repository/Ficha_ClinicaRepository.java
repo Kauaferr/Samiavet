@@ -9,7 +9,7 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.domain.FichaClinica;
 
 
 @Repository
-public interface Ficha_ClinicaRepository extends JpaRepository<FichaClinica, Integer>  {
+public interface Ficha_ClinicaRepository extends JpaRepository<FichaClinica, Long>  {
 
 	List<FichaClinica> findByEmail(String email);
 	List<FichaClinica> findByNomeAnimal(String nomeAnimal);

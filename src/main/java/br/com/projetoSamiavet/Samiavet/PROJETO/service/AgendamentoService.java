@@ -2,11 +2,11 @@ package br.com.projetoSamiavet.Samiavet.PROJETO.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.Agendamento;
-import br.com.projetoSamiavet.Samiavet.PROJETO.dto.AgendamentoDto;
 import br.com.projetoSamiavet.Samiavet.PROJETO.repository.AgendamentoRepository;
 
 @Service
@@ -32,4 +32,7 @@ public class AgendamentoService {
 		return this.agendamentoRepository.findAll();
 	}
 	
+	public List<Agendamento> retornaPeloNome(String nome){
+		return this.agendamentoRepository.findByNomeAnimal(nome);
+	}
 }

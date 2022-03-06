@@ -1,6 +1,7 @@
 package br.com.projetoSamiavet.Samiavet.PROJETO.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.Produtos;
-import br.com.projetoSamiavet.Samiavet.PROJETO.dto.ProdutosDTO;
 import br.com.projetoSamiavet.Samiavet.PROJETO.repository.ProdutosRepository;
-import br.com.projetoSamiavet.Samiavet.PROJETO.response.ProdutoResponse;
 
 
 @Service
@@ -28,9 +27,6 @@ public class ProdutosService {
 		this.produtosRepository.save(produtos);
 	}
 
-	
-
-
 	public List<Produtos> listarProdutosPorId(String codigoBarras){
 		return this.produtosRepository.findByCodigoBarras(codigoBarras);
 	}
@@ -43,5 +39,13 @@ public class ProdutosService {
 		
 		this.produtosRepository.saveAll(lista);
 		
+	}
+	
+	public void excluir(String codigoBarras) {
+		this.produtosRepository.deleteById(codigoBarras);
+	}
+	
+	public List<Produtos> listarProdutosPorNome(String nome){
+		return this.produtosRepository.findByNome(nome);
 	}
 }

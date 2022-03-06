@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -11,10 +12,10 @@
 	<h:outputStylesheet library="css" name="style.css"/>
 	<h:outputScript library="js" name="scripts.js"/>
 	<link rel="icon" href="../resources/imagens/SamiaVet.png" />
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
 	
 </h:head>
 <h:body style="background-color:#f3f3f3; font-family: 'Open Sans', sans-serif !important;" onload="chamar()">
+
 	<style>
 		.img-samiavet{
 			width:40%;
@@ -167,13 +168,32 @@
     	    font-size: 11px !important;
     	    float:left;
 		}
+				button.ui-button{
+ 			background-color:#6ab125;
+ 			border:0px;
+ 		}
+ 		button.ui-button:hover{
+ 			background-color:#78b83b;
+ 		}
+	.div-top{
+		 
+		     width: 100% !important;
+		     background: url(../resources/imagens/bg.jpg) repeat-x !important;
+			 padding: 15px 0 0 0 !important;
+			 background-color: black;
+		}
+		.ui-clock{
+    		background-color: black;
+		}
+	
 	</style>
 	
+	<div class="div-top">
+				<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
+				<div style="float:right; margin-top:10px;">
+        			<p:clock pattern="HH:mm:ss"/>
+				</div>
 	
-	<p:growl id="msgGlobal" life="5000" showDetail="true"/>
-<img src="../resources/imagens/SamiaVet.png" class="img-samiavet" style="width:20%"/>
-	
-	<div style="float:right; margin-top:10px;">
 	</div>
 	
 <h:form>  
@@ -188,33 +208,40 @@
         </p:submenu>
  
         <p:submenu label="PRODUTOS" icon="pi pi-tags">
-             <p:menuitem value="Cadastrar produto"  url="vendas.xhtml"/>
- 			<p:separator />
-            <p:menuitem value="Consultar produtos"/>
+             <p:menuitem value="Cadastrar produto"  url="cadastroProdutos.xhtml"/>
         </p:submenu>
  
         <p:submenu label="VENDAS" icon="pi pi-shopping-cart">
           <p:menuitem value="Cadastrar venda"  url="vendas.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Consultar vendas"/>
+            <p:menuitem value="Consultar vendas" url="consultaVendas.xhtml"/>
         </p:submenu>
  
         <p:submenu label="ARQUIVOS" icon="pi pi-folder-open">
               <p:menuitem value="Upload" url="upload.xhtml"/>
  			<p:separator />
-            <p:menuitem value="Download"/>
             <p:menuitem value="Arquivos" url="arquivos.xhtml"/>
         </p:submenu>
  
        
- 
+ 		 <p:submenu label="SERVIÇOS" icon="pi pi-folder-open">
+              <p:menuitem value="Cadastrar serviços" url="cadastroServicos.xhtml"/>
+ 			<p:separator />
+            <p:menuitem value="Consultar servicos" url="consultaServicos.xhtml"/>
+        </p:submenu>
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-            <p:commandButton type="button" value="Logout" style="background-color:#6ab125;" icon="pi pi-home" />
+           
+ 			<p:commandButton id="basic" icon ="pi pi-user"  type="button" style="background-color:#f8f9fa; color: black; border:0px;"/>			
+ 			<p:overlayPanel for="basic" style="width:350px">
+		     <p:commandButton value="Sair" actionListener="#{user.Sair}"  style="width:100%;border-color:white; "/>
+        </p:overlayPanel>	     
         </f:facet>
     </p:menubar>
-</h:form>    
-
+</h:form>
+	
+		<p:growl id="msgGlobal" life="5000" />
+	
+			
 <p:dialog  widgetVar="dialogArquivosAG" showEffect="blind" hideEffect="explode"  closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogArquivosAG">
 
 		
@@ -222,7 +249,7 @@
             <h:form id="formOpcoesAG">
 
 				
-				<h4>OPÇÕES ARQUIVO: </h4>
+				<h4>OPÇÕES ARQUIVO:</h4>
 				
 				
 				<p:panelGrid columns="2">
@@ -233,7 +260,7 @@
 	           			 <p:fileDownload value="#{arquivosBean.fileArquivosGeral}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="background-color:#6ab125"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivosGeral}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosAG').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -257,12 +284,12 @@
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"   actionListener="#{arquivosBean.downloadArquivos}">
 	           		
 	           			 <p:fileDownload value="#{arquivosBean.fileArquivosES}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="background-color:#6ab125"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoES}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosES').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -286,12 +313,12 @@
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  actionListener="#{arquivosBean.downloadArquivos}">
 	           		
-	           			 <p:fileDownload value="#{arquivosBean.fileArquivosUS}" style="background-color:#6ab125" />
+	           			 <p:fileDownload value="#{arquivosBean.fileArquivosUS}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoUS}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosUS').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -316,12 +343,12 @@
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download" style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download" actionListener="#{arquivosBean.downloadArquivos}">
 	           		
-	           			 <p:fileDownload value="#{arquivosBean.fileArquivosRX}" style="background-color:#6ab125"/>
+	           			 <p:fileDownload value="#{arquivosBean.fileArquivosRX}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoUS}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosUS').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -344,12 +371,12 @@
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"   actionListener="#{arquivosBean.downloadArquivos}">
 	           		
-	           			 <p:fileDownload value="#{arquivosBean.fileArquivosCT}" style="background-color:#6ab125"/>
+	           			 <p:fileDownload value="#{arquivosBean.fileArquivosCT}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="margin-left:10px; background-color:#6ab125"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoUS}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosUS').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -360,24 +387,24 @@
     
     
       
-	<p:dialog header="OPÇÕES ARQUIVOS" widgetVar="dialogArquivosSV" showEffect="blind" hideEffect="explode"  closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogArquivosSV">
+	<p:dialog header="OPÃÃES ARQUIVOS" widgetVar="dialogArquivosSV" showEffect="blind" hideEffect="explode"  closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogArquivosSV">
 
 		
 
             <h:form id="formOpcoesSV">
 
 				
-				<h4>OPÇÕES ARQUIVO: </h4>				
+				<h4>OPÇÕES ARQUIVO: </h4>
 				
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download" style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  actionListener="#{arquivosBean.downloadArquivos}">
 	           		
 	           			 <p:fileDownload value="#{arquivosBean.fileArquivosSV}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="background-color:#6ab125; margin-left:10px;"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoSV}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosSV').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -387,7 +414,7 @@
     </p:dialog>
     
      
-<p:dialog header="OPÇÕES ARQUIVOS" widgetVar="dialogArquivosFU" showEffect="blind" hideEffect="explode"  closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogArquivosFU">
+<p:dialog header="OPÃÃES ARQUIVOS" widgetVar="dialogArquivosFU" showEffect="blind" hideEffect="explode"  closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogArquivosFU">
 
 		
 
@@ -400,12 +427,12 @@
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download" style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  actionListener="#{arquivosBean.downloadArquivos}">
 	           		
 	           			 <p:fileDownload value="#{arquivosBean.fileArquivosFU}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="background-color:#6ab125; margin-left:10px;"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirArquivoSV}"  update=":formArquivos :msgGlobal" oncomplete="PF('dialogArquivosSV').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -423,18 +450,18 @@
             <h:form id="formOpcoesIMG">
 
 				
-				<h4>OPÇÕES IMAGEM: </h4>
+				<h4>OPÇÕES ARQUIVO: </h4>
 				
 				
 				<p:panelGrid columns="3">
 	           
 	           		
-	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download" style="background-color:#6ab125" actionListener="#{arquivosBean.downloadArquivos}">
+	           		<p:commandButton value="FAZER DOWNLOAD" icon="pi pi-cloud-download"  actionListener="#{arquivosBean.downloadArquivos}">
 	           		
 	           			 <p:fileDownload value="#{arquivosBean.fileArquivosImagens}" />
 	           		
 	           		</p:commandButton>
-	           		<p:commandButton value="EXCLUIR" icon="pi pi-trash" style="background-color:#6ab125; margin-left:10px;"/>
+	            	<p:commandButton value="EXCLUIR" styleClass="botaoDeletar" actionListener="#{arquivosBean.excluirImagens}"  update=":formImagens :msgGlobal" oncomplete="PF('dialogArquivosIMG').hide()" />
 	           		
 	           		
 	           	</p:panelGrid>
@@ -445,26 +472,25 @@
     
     
     
-    
-    
     <p:dialog header="VIZUALIZAR" widgetVar="dialogVizualizarES" showEffect="blind" hideEffect="explode"  width="100%"  height="100%" closable="true" draggable="false" resizable="false" modal="true" appendTo="@(body)" id="dialogVizualizarES">
 
 		
 
             <h:form id="formVizualisarES">
-				 <p:dataScroller value="#{arquivosBean.listaES}" var="ES" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaESView}" var="ES" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS EXAME DE SANGUE (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton style="background-color:#6ab125" value="Pesquisar"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoES}" completeMethod="#{arquivosBean.listaNomesArquivosES}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarES" actionListener="#{arquivosBean.pesquisarES}"/>
+                	  	<p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosES}" update=":formVizualisarES" style="margin-left:5px;"/>
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{ES.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{ES.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
+       				 	Seu navegador nÃ£o pode abrir esse arquivo, <h:outputLink
             			value="/resources/arquivos/#{ES.nomeArquivo}">Clique aqui</h:outputLink>para baixar o arquivo.
     				</p:media>
                 
@@ -483,20 +509,21 @@
 		
 
             <h:form id="formVizualisarFU">
-				 <p:dataScroller value="#{arquivosBean.listaUS}" var="FU" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaFUView}" var="FU" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS EXAMES DE FEZES E URINA (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton style="background-color:#6ab125" value="Pesquisar"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoFU}" completeMethod="#{arquivosBean.listaNomesArquivosFU}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarFU" actionListener="#{arquivosBean.pesquisarFU}"/>
+           			     <p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosFU}" update=":formVizualisarFU" style="margin-left:5px;"/>
+           			
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{FU.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{FU.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
-            			value="/resources/arquivos/#{FU.nomeArquivo}">Clique aqui</h:outputLink> para baixar o arquivo.
+       				 	
     				</p:media>
                 
                 </p:card>
@@ -512,19 +539,21 @@
 		
 
             <h:form id="formVizualisarRX">
-				 <p:dataScroller value="#{arquivosBean.listaRX}" var="RX" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaRXView}" var="RX" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS EXAME DE RAIO X (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton value="Pesquisar" style="background-color:#6ab125"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoRX}" completeMethod="#{arquivosBean.listaNomesArquivosRX}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarRX" actionListener="#{arquivosBean.pesquisarRX}"/>
+           			 	<p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosRX}" update=":formVizualisarRX" style="margin-left:5px;"/>
+           			 	
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{RX.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{RX.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
+       				 	Seu navegador nÃ£o pode abrir esse arquivo, <h:outputLink
             			value="/resources/arquivos/#{RX.nomeArquivo}">Clique aqui</h:outputLink> para baixar o arquivo.
     				</p:media>
                 
@@ -542,19 +571,20 @@
 		
 
             <h:form id="formVizualisarSV">
-				 <p:dataScroller value="#{arquivosBean.listaSV}" var="SV" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaSVView}" var="SV" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS SAMIAVET (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton value="Pesquisar" style="background-color:#6ab125"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoSV}" completeMethod="#{arquivosBean.listaNomesArquivosSV}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarSV" actionListener="#{arquivosBean.pesquisarSV}"/>
+           				 <p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosSV}" update=":formVizualisarSV" style="margin-left:5px;"/>	
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{SV.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{SV.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
+       				 	Seu navegador nÃ£o pode abrir esse arquivo, <h:outputLink
             			value="/resources/arquivos/#{SV.nomeArquivo}">Clique aqui</h:outputLink> para baixar o arquivo.
     				</p:media>
                 
@@ -572,19 +602,20 @@
 		
 
             <h:form id="formVizualisarCT">
-				 <p:dataScroller value="#{arquivosBean.listaCT}" var="CT" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaCTView}" var="CT" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS DE CITOLOGIA (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton value="Pesquisar" style="background-color:#6ab125"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoCT}" completeMethod="#{arquivosBean.listaNomesArquivosCT}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarCT" actionListener="#{arquivosBean.pesquisarCT}"/>
+           				 <p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosCT}" update=":formVizualisarCT" style="margin-left:5px;"/>
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{CT.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{CT.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
+       				 	Seu navegador nÃ£o pode abrir esse arquivo, <h:outputLink
             			value="/resources/arquivos/#{CT.nomeArquivo}">Clique aqui</h:outputLink> para baixar o arquivo.
     				</p:media>
                 
@@ -602,19 +633,20 @@
 		
 
             <h:form id="formVizualisarUS">
-				 <p:dataScroller value="#{arquivosBean.listaUS}" var="US" chunkSize="10" mode="inline" style="height:100%"
+				 <p:dataScroller value="#{arquivosBean.listaUSView}" var="US" chunkSize="10" mode="inline" style="height:100%"
                         scrollHeight="500">
                 	
                 	  <f:facet name="header">
                 	  	<h:outputText value="ARQUIVOS DE ULTRASSOM (PDF)"/>
-                	  	<br/><br/><p:inputText  placeholder="Pesquise por arquivos"/><p:commandButton value="Pesquisar" style="background-color:#6ab125"/>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeArquivoUS}" completeMethod="#{arquivosBean.listaNomesArquivosUS}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formVizualisarUS" actionListener="#{arquivosBean.pesquisarUS}"/>
+           			 	<p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.US}" update=":formVizualisarUS" style="margin-left:5px;"/>
            			 </f:facet>
                 	 <p:card style="width: 25rem; margin-bottom: 2em; float:left; margin-left:10px;">
    				 	<f:facet name="title">
        				 <h3 style="font-weight: bold; margin-left: 10px;">#{US.nomeArquivo}</h3>
    					 </f:facet>
    					 <p:media value="/resources/arquivos/#{US.nomeArquivo}" width="350px;" height="300px;" style="float:left;" >
-       				 	Seu navegador não pode abrir esse arquivo, <h:outputLink
+       				 	Seu navegador nÃ£o pode abrir esse arquivo, <h:outputLink
             			value="/resources/arquivos/#{US.nomeArquivo}">Clique aqui</h:outputLink> para baixar o arquivo.
     				</p:media>
                 
@@ -627,30 +659,22 @@
     </p:dialog>
     
     
-    
+    <h:form id="formArquivos">
      
-    <p:panel header="Explorador de arquivos" toggleable="true"  toggleSpeed="500"
-                closeSpeed="500" widgetVar="panel" style="height:1000px;">
 
-        <p:ajax event="toggle" />
 
-       
 				       
-				       
-				       
-					<div class="card">
 				    <p:tab id="dados-proprietario"  styleClass="tab-proprietario">
 	            			  <p:tabView>
 				      			  <p:tab title="ARQUIVOS SALVOS: ">
 				
-						 <div class="card">
 				        <p:accordionPanel widgetVar="basic">
 				            <p:tab title="EXAME DE SANGUE">
-				                <p:dataTable value="#{arquivosBean.listaES}" var="ES" type="ordered" scrollable="true" scrollHeight="250">
+				                <p:dataTable value="#{arquivosBean.listaES}" var="ES" type="ordered" scrollable="true" scrollHeight="250" >
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" onclick="PF('dialogVizualizarES').show()" style="background-color:#6ab125"/>
+				                <p:commandButton icon="pi pi-external-link" onclick="PF('dialogVizualizarES').show()"/>
 				                	
 				                
 				                </f:facet>
@@ -660,7 +684,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" style="background-color:#6ab125" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesES" onclick="PF('dialogArquivosES').show()">
+				       				 <p:commandButton value="OPÃÃES"  styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesES" onclick="PF('dialogArquivosES').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosES}"  value="#{ES}"/>
 				       				 		
@@ -675,7 +699,7 @@
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" style="background-color:#6ab125" onclick="PF('dialogVizualizarUS').show()" />
+				                <p:commandButton icon="pi pi-external-link"  onclick="PF('dialogVizualizarUS').show()" />
 				                	
 				                
 				                </f:facet>
@@ -685,7 +709,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" style="background-color:#6ab125" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesUS" onclick="PF('dialogArquivosUS').show()">
+				       				 <p:commandButton value="OPÃÃES"  styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesUS" onclick="PF('dialogArquivosUS').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosUS}"  value="#{US}"/>
 				       				 		
@@ -700,7 +724,7 @@
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" style="background-color:#6ab125" onclick="PF('dialogVizualizarFU').show()" />
+				                <p:commandButton icon="pi pi-external-link" onclick="PF('dialogVizualizarFU').show()" />
 				                	
 				                
 				                </f:facet>
@@ -710,7 +734,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" style="background-color:#6ab125" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesFU" onclick="PF('dialogArquivosFU').show()">
+				       				 <p:commandButton value="OPÃÃES"  styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesFU" onclick="PF('dialogArquivosFU').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosFU}"  value="#{FU}"/>
 				       				 		
@@ -724,7 +748,7 @@
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" style="background-color:#6ab125" onclick="PF('dialogVizualizarRX').show()" />
+				                <p:commandButton icon="pi pi-external-link"  onclick="PF('dialogVizualizarRX').show()" />
 				                	
 				                
 				                </f:facet>
@@ -734,7 +758,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" style="background-color:#6ab125" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesRX" onclick="PF('dialogArquivosRX').show()">
+				       				 <p:commandButton value="OPÃÃES"  styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesRX" onclick="PF('dialogArquivosRX').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosRX}"  value="#{RX}"/>
 				       				 		
@@ -748,7 +772,7 @@
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" style="background-color:#6ab125" onclick="PF('dialogVizualizarCT').show()" />
+				                <p:commandButton icon="pi pi-external-link"  onclick="PF('dialogVizualizarCT').show()" />
 				                	
 				                
 				                </f:facet>
@@ -758,7 +782,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" styleClass="ui-button-raised" icon="pi pi-bars"  style="background-color:#6ab125" update=":formOpcoesCT" onclick="PF('dialogArquivosCT').show()">
+				       				 <p:commandButton value="OPÃÃES" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesCT" onclick="PF('dialogArquivosCT').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosCT}"  value="#{CT}"/>
 				       				 		
@@ -773,7 +797,7 @@
 				                
 				                <f:facet name="header">
 				                
-				                <p:commandButton icon="pi pi-external-link" style="background-color:#6ab125" onclick="PF('dialogVizualizarSV').show()" />
+				                <p:commandButton icon="pi pi-external-link"  onclick="PF('dialogVizualizarSV').show()" />
 				                	
 				                
 				                </f:facet>
@@ -783,7 +807,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" styleClass="ui-button-raised" icon="pi pi-bars"  style="background-color:#6ab125" update=":formOpcoesSV" onclick="PF('dialogArquivosSV').show()">
+				       				 <p:commandButton value="OPÃÃES" styleClass="ui-button-raised" icon="pi pi-bars"   update=":formOpcoesSV" onclick="PF('dialogArquivosSV').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosSV}"  value="#{SV}"/>
 				       				 		
@@ -802,7 +826,7 @@
 				                </p:panelGrid>
 				                </p:column>
 				                <p:column> 
-				       				 <p:commandButton value="OPÇÕES" styleClass="ui-button-raised" icon="pi pi-bars"  style="background-color:#6ab125" update=":formOpcoesAG" onclick="PF('dialogArquivosAG').show()">
+				       				 <p:commandButton value="OPÃÃES" styleClass="ui-button-raised" icon="pi pi-bars"  update=":formOpcoesAG" onclick="PF('dialogArquivosAG').show()">
 				       				 
 				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivosGeral}"  value="#{AG}"/>
 				       				 		
@@ -812,47 +836,42 @@
 				    			</p:dataTable>
 				            </p:tab>
 				        </p:accordionPanel>
-				   		 </div>
-						      
-				 				<p:dataScroller value="#{arquivosBean.listaArquivoImagens}" var="IMG" chunkSize="10" mode="inline" 
-				                        scrollHeight="500" style="margin-top:20px;">
-				                	
-				                	  <f:facet name="header">
-				                	  	<h3 style="font-weight: bold; margin-left: 10px;">GALERIA DE IMAGENS (SAMIAVET)</h3>
-				                	  	<br/><br/><p:inputText  placeholder="Pesquise por imagens"/><p:commandButton style="background-color:#6ab125; margin-left:10px;" value="Pesquisar"/>
-				           			 </f:facet>
-				                	 <p:card style="width: 20rem; margin-bottom: 2em; float:left; margin-left:10px; height:25rem;">
-				   				 	<f:facet name="title">
-				       				 <h4 style="font-weight: bold; margin-left: 10px;">#{IMG.nomeImagem}</h4>
-				   					 </f:facet>
-				   					 <p:graphicImage value="/resources/arquivos/#{IMG.nomeImagem}" style="width:300px; height:300px;" />
-				                	<p:separator/>
-				                	<p:commandButton value="OPÇÕES" styleClass="ui-button-raised" icon="pi pi-bars"  style="background-color:#6ab125;margin-left:10px;" update=":formOpcoesIMG" onclick="PF('dialogArquivosIMG').show()">
-				       				 
-				       				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivoImagem}"  value="#{IMG}"/>
-				       				 		
-				       				 
-				       				 </p:commandButton>
-				                </p:card>
-				    			</p:dataScroller>
+				   		
 				  			</p:tab>
 				  			</p:tabView>
 				  			</p:tab>
-				  			
-				</div>
-				       
-				       
-				       
-				       
+	
+	
+    </h:form>
+    
+    
 
-        <f:facet name="options">
-            <p:menu>
-                <p:submenu label="Configurações">
-                    <p:menuitem value="Toggle" url="#" icon="pi pi-clone" onclick="PF('panel').toggle()"/>
-                </p:submenu>
-            </p:menu>
-        </f:facet>
-    </p:panel>
+     <h:form id="formImagens">
+		<p:dataScroller value="#{arquivosBean.listaArquivoImagensView}" var="IMG" chunkSize="10" mode="inline" 
+                     scrollHeight="500">
+             	
+             	  <f:facet name="header">
+             	  	<h3 style="font-weight: bold; margin-left: 10px;">GALERIA DE IMAGENS (SAMIAVET)</h3>
+                	  	<br/><br/><p:autoComplete  placeholder="Pesquise por arquivos" value="#{arquivosBean.nomeImagem}" completeMethod="#{arquivosBean.listaNomesImagens}"/><p:commandButton style="margin-left:5px;" value="Pesquisar" update=":formImagens" actionListener="#{arquivosBean.pesquisarImagens}"/>
+        				<p:commandButton icon="pi pi-undo" actionListener="#{arquivosBean.resetarArquivosImagens}" update=":formImagens" style="margin-left:5px;"/>
+        			 </f:facet>
+             	 <p:card style="float:left;">
+				 	<f:facet name="title">
+    				 <h4 style="font-weight: bold; margin-left: 10px;">#{IMG.nomeImagem}</h4>
+					 </f:facet>
+					 <p:graphicImage value="/resources/arquivos/#{IMG.nomeImagem}" style="width:300px; height:300px;" />
+             	<p:separator/>
+             	<p:commandButton value="OPÇÕES" styleClass="ui-button-raised" icon="pi pi-bars"  style="margin-left:10px;" update=":formOpcoesIMG" onclick="PF('dialogArquivosIMG').show()">
+    				 
+    				 		 <f:setPropertyActionListener target="#{arquivosBean.arquivoImagem}"  value="#{IMG}"/>
+    				 		
+    				 
+    				 </p:commandButton>
+             </p:card>
+ 			</p:dataScroller>
+ 			
+		</h:form>		    			
+    
     
     <script>
     

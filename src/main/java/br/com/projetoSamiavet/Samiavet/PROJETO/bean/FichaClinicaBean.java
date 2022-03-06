@@ -12,14 +12,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.projetoSamiavet.Samiavet.PROJETO.domain.Produtos;
-import br.com.projetoSamiavet.Samiavet.PROJETO.dto.FichaClinicaDto;
+import br.com.projetoSamiavet.Samiavet.PROJETO.domain.FichaClinica;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.Ficha_ClinicaService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 
@@ -27,89 +25,61 @@ import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 @ViewScoped
 public class FichaClinicaBean {
 	
-	private FichaClinicaDto FichaClinica;
-	private ArrayList<FichaClinicaDto> itens;
+	private FichaClinica FichaClinica;
+	private ArrayList<FichaClinica> itens;
 	private String nomeBusca;
-	
-	private UploadedFile file;
-	
-	
 	@Autowired
 	private Ficha_ClinicaService fichaService;
 	
    
 	
 	public FichaClinicaBean() {
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		this.fichaService = new Ficha_ClinicaService();
 		
 	}
     
 	
 	
-	
-	
-	public UploadedFile getFile() {
-		return file;
-	}
-
-
-
-
-
-	public void setFile(UploadedFile file) {
-		this.file = file;
-	}
-
-
-
-
-
-	public FichaClinicaDto getFichaClinica() {
+	public FichaClinica getFichaClinica() {
 		return FichaClinica;
 	}
 
 
 
-	public Ficha_ClinicaService getFichaService() {
-		return fichaService;
-	}
-
-	public void setFichaService(Ficha_ClinicaService fichaService) {
-		this.fichaService = fichaService;
-	}
-
-	public void setFichaClinica(FichaClinicaDto fichaClinica) {
+	public void setFichaClinica(FichaClinica fichaClinica) {
 		FichaClinica = fichaClinica;
 	}
 
 
 
-	public ArrayList<FichaClinicaDto> getItens() {
+	public ArrayList<FichaClinica> getItens() {
 		return itens;
 	}
 
 
 
-	public void setItens(ArrayList<FichaClinicaDto> itens) {
+	public void setItens(ArrayList<FichaClinica> itens) {
 		this.itens = itens;
 	}
 
 
 
-	
-
 	public String getNomeBusca() {
 		return nomeBusca;
 	}
+
+
 
 	public void setNomeBusca(String nomeBusca) {
 		this.nomeBusca = nomeBusca;
 	}
 
+
+
 	@PostConstruct
 	public void listar() {
-		itens = new ArrayList<FichaClinicaDto>(this.fichaService.listarFichas().getBody().getFicha_clinica());
+		itens = new ArrayList<FichaClinica>(this.fichaService.listar());
 	}
 	
 
@@ -117,7 +87,7 @@ public class FichaClinicaBean {
 		
 		Random n1 = new Random();
 		
-		this.FichaClinica.setId(n1.nextInt(1000000000));
+		
 		
 		LocalDate data = LocalDate.now();
 		
@@ -130,20 +100,20 @@ public class FichaClinicaBean {
 		if(validacao == true) {
 			String nomeAnimalMaiusculo = this.FichaClinica.getNomeAnimal().toUpperCase();
 			JsfUtil.adicionarMensagemDeSucesso(nomeAnimalMaiusculo +  " FOI CADASTRADO(A) COM SUCESSO", null);
-			this.FichaClinica = new FichaClinicaDto();
+			this.FichaClinica = new FichaClinica();
 
 
 		}else if( validacao == false) {
 			
 			JsfUtil.adicionarMensagemDeErro("ESTE E-MAIL J� EST� CADASTRADO NO SISTEMA", null);
 		}
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		listar();
 	}
 	public void excluir() {
 		this.fichaService.excluir(this.FichaClinica.getId());
 		JsfUtil.adicionarMensagemDeSucesso("FICHA DELETADA COM SUCESSO", null);
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		listar();
 	}
 	
@@ -159,27 +129,27 @@ public class FichaClinicaBean {
 			
 			JsfUtil.adicionarMensagemDeErro("ESTE E-MAIL J� EST� CADASTRADO NO SISTEMA", null);
 		}
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		listar();
 
 	}
 	public void buscarNome() {
-		List<FichaClinicaDto> lista = this.fichaService.listarFichasPorNomeAnimal(nomeBusca).getBody().getFicha_clinica();
+		List<FichaClinica> lista = this.fichaService.listarPorNome(this.nomeBusca);
 		
-		itens = new ArrayList<FichaClinicaDto>(lista);
+		itens = new ArrayList<FichaClinica>(lista);
 		JsfUtil.adicionarMensagemDeSucesso("AQUI EST�O OS RESULTADOS ENCONTRADOS: ", null);
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		setNomeBusca(null);
 		
 	}
 	
 	public void listarTodos() {
 		
-		List<FichaClinicaDto> lista = this.fichaService.listarFichas().getBody().getFicha_clinica();
+		List<FichaClinica> lista = this.fichaService.listar();
 
-		itens = new ArrayList<FichaClinicaDto>(lista);
+		itens = new ArrayList<FichaClinica>(lista);
 		JsfUtil.adicionarMensagemDeSucesso("CONSULTA RESETADA ", null);
-		this.FichaClinica = new FichaClinicaDto(); 
+		this.FichaClinica = new FichaClinica(); 
 		setNomeBusca(null);
 
 
@@ -190,21 +160,21 @@ public class FichaClinicaBean {
 	        ec.redirect(ec.getRequestContextPath() + "/pages/upload.xhtml");	
 		}
 	
-	public void printar() {
-		System.out.println(this.file.getFileName());
-	}
+	
 	
 	public List<String> completarCodigoBarras(String query) {
         String queryLowerCase = query.toLowerCase();
-        List<String> countryList = new ArrayList<>();
-        List<FichaClinicaDto> produtos = this.fichaService.listarFichas().getBody().getFicha_clinica();
-        for (FichaClinicaDto produto : produtos) {
-            countryList.add(produto.getNomeAnimal());
+        List<String> listaNomes = new ArrayList<>();
+        List<FichaClinica> nomes = this.fichaService.listar();
+        for (FichaClinica nomesAnimais : nomes) {
+        	listaNomes.add(nomesAnimais.getNomeAnimal());
         }
 
-        return countryList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+        return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
     }
 	public void upload(FileUploadEvent evento) {
 		System.out.println("entroooou");
 	}
+	
+
 }

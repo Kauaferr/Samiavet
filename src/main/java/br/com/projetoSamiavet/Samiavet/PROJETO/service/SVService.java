@@ -44,4 +44,8 @@ public class SVService {
 		
 		return nomeArquivo;
 	}
+	
+	public List<ArquivosSV> buscarPorNome(String nome){
+		return this.svRepository.findByNomeArquivo(nome);
+	}
 }

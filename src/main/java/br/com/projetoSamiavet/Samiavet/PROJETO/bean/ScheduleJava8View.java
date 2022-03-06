@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,6 +23,7 @@ import org.primefaces.model.ScheduleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.projetoSamiavet.Samiavet.PROJETO.domain.Agendamento;
+import br.com.projetoSamiavet.Samiavet.PROJETO.domain.FichaClinica;
 import br.com.projetoSamiavet.Samiavet.PROJETO.service.AgendamentoService;
 import br.com.projetoSamiavet.Samiavet.PROJETO.util.JsfUtil;
 @Named(value="scheduleJava8View")
@@ -57,6 +59,9 @@ public class ScheduleJava8View implements Serializable {
     
     private ArrayList<Agendamento> itens;
     
+    private String pesquisarNome;
+    
+    
     public ScheduleJava8View() {
     	this.agendamento = new Agendamento();
 
@@ -64,6 +69,7 @@ public class ScheduleJava8View implements Serializable {
     @PostConstruct
     public void init() {
     	
+    	JsfUtil.adicionarMensagemDeSucesso("Eventos atualizados!", null);
         eventModel = new DefaultScheduleModel();
         
         
@@ -115,7 +121,14 @@ public class ScheduleJava8View implements Serializable {
         };
     }
      
-    public LocalDateTime getRandomDateTime(LocalDateTime base) {
+    
+    public String getPesquisarNome() {
+		return pesquisarNome;
+	}
+	public void setPesquisarNome(String pesquisarNome) {
+		this.pesquisarNome = pesquisarNome;
+	}
+	public LocalDateTime getRandomDateTime(LocalDateTime base) {
         LocalDateTime dateTime = base.withMinute(0).withSecond(0).withNano(0);
         return dateTime.plusDays(((int) (Math.random()*30)));
     }
@@ -376,5 +389,25 @@ public class ScheduleJava8View implements Serializable {
 		this.itens = itens;
 	}
     
+
+	public List<String> completarNomeAnimal(String query) {
+        String queryLowerCase = query.toLowerCase();
+        List<String> listaNomes = new ArrayList<>();
+        List<Agendamento> nomes = this.agendamentoService.listarAgendamentos();
+        for (Agendamento nomesAnimais : nomes) {
+        	listaNomes.add(nomesAnimais.getNomeAnimal());
+        }
+
+        return listaNomes.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+    }
 	
+	public void pesquisarAgendamento() {
+        this.itens= new ArrayList<Agendamento>(this.agendamentoService.retornaPeloNome(this.pesquisarNome));
+
+	}
+	
+	public void resetar() {
+        this.itens = new ArrayList<Agendamento>(this.agendamentoService.listarAgendamentos());
+
+	}
 }

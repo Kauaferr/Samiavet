@@ -3,9 +3,11 @@ package br.com.projetoSamiavet.Samiavet.PROJETO.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,7 @@ public class Vendas {
 	private String forma_pagamento;
 	
 	
-	@OneToMany()
+	@OneToMany(fetch = FetchType.LAZY)
     private List<Produtos> produtos= new ArrayList<Produtos>();
 
 	
@@ -133,6 +135,21 @@ public class Vendas {
 		this.produtos = produtos;
 	}
 
+
+
+
+	public Long getIdVenda() {
+		return idVenda;
+	}
+
+
+
+
+	public void setIdVenda(Long idVenda) {
+		this.idVenda = idVenda;
+	}
+	
+	
 	
 }
 	

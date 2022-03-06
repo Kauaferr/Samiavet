@@ -42,6 +42,10 @@ public class CTService {
 		
 		return nomeArquivo;
 	}
+	
+	public List<ArquivosCT> buscarPorNome(String nome){
+		return this.ctRepository.findByNomeArquivo(nome);
+	}
 }
 
 

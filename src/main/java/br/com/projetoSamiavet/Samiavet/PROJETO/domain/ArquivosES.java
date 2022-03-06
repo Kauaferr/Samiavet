@@ -55,6 +55,13 @@ public class ArquivosES {
 	public ArquivosES() {
 		
 	}
+
+
+	public ArquivosES(Long id, String nomeArquivo, String tipoArquivo) {
+		this.id = id;
+		this.nomeArquivo = nomeArquivo;
+		this.tipoArquivo = tipoArquivo;
+	}
 	
 	
 	

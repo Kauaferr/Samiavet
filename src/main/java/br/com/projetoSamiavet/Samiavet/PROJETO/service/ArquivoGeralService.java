@@ -37,4 +37,9 @@ public class ArquivoGeralService {
 		
 		return nomeArquivo;
 	}
+	
+	
+	public void deletar(Long id) {
+		this.arquivosRepository.deleteById(id);
+	}
 }
